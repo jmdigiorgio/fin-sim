@@ -29,3 +29,16 @@ export const Label = styled('span')({
   fontSize: '14px',
   minWidth: '140px',
 });
+
+export const TitleRow = styled(Box)({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+  '& h2': {
+    margin: 0,
+    fontSize: '24px',
+    fontWeight: 600,
+    fontFamily: 'var(--font-geist-sans)',
+  }
+});

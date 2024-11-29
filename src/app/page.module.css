@@ -172,3 +172,64 @@ a.secondary {
   top: 20px;
   right: 20px;
 }
+
+.dropdownContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 16px;
+}
+
+.dropdownLabel {
+  font-family: var(--font-geist-sans);
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.appName {
+  font-family: var(--font-geist-sans);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+/* Add this to your existing media query for dark mode */
+@media (prefers-color-scheme: dark) {
+  .logo {
+    filter: brightness(0.9);
+  }
+}
+
+/* Add this to your existing mobile media query */
+@media (max-width: 600px) {
+  .header {
+    position: relative;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

@@ -1,15 +1,8 @@
 'use client';
 
-import { TextField, InputAdornment } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { InputAdornment } from '@mui/material';
 import { ChangeEvent } from 'react';
-
-const StyledTextField = styled(TextField)({
-  width: '120px',
-  '& input': {
-    fontFamily: 'var(--font-geist-sans)',
-  }
-});
+import { StyledTextField } from './styles';
 
 interface MoneyInputProps {
   value: string;

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, MenuItem } from '@mui/material';
+import { MenuItem } from '@mui/material';
 import { Dropdown } from '@/components/Dropdown';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import styles from "./page.module.css";

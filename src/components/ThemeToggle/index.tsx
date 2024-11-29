@@ -14,7 +14,7 @@ export const ThemeToggle = () => {
       color="inherit"
       aria-label="toggle theme"
     >
-      {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+      {isDarkMode ? <Brightness4Icon /> : <Brightness7Icon />}
     </IconButton>
   );
 };

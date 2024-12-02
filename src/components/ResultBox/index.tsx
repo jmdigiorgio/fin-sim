@@ -4,11 +4,15 @@ import { StyledPaper } from './styles';
 
 interface ResultBoxProps {
   children: React.ReactNode;
+  type?: 'gain' | 'loss' | 'neutral';
 }
 
-export const ResultBox = ({ children }: ResultBoxProps) => {
+export const ResultBox = ({ children, type = 'neutral' }: ResultBoxProps) => {
   return (
-    <StyledPaper elevation={0}>
+    <StyledPaper 
+      elevation={0}
+      className={type}
+    >
       {children}
     </StyledPaper>
   );

@@ -1,4 +1,4 @@
-import { Container, InputRow, Label, TitleRow } from './styles';
+import { Container, InputRow, Label, TitleRow, InputGroup, ResultsGroup } from './styles';
 import { MenuItem } from '@mui/material';
 import { Dropdown } from '@/components/Dropdown';
 import { MoneyInput } from '@/components/MoneyInput';
@@ -60,8 +60,16 @@ export const ReturnCalc = () => {
           <h2>Return on Investment</h2>
           <p style={{ margin: 0 }}>
             <MetadataTag 
-              label="stable return & recurring investment"
-              tooltip="This calculator assumes an average rate of return and a stable recurring investment over the entire period. The idea is that, in reality, the return rate will fluctuate, but, over time, it will average out to the rate you enter. You should also increase your recurring investment over time to account for inflation and salary increases."
+              label="average return"
+              tooltip="This calculator uses an average rate of return. In reality, returns will fluctuate, but over time they should average out to the rate you enter."
+            />
+            <MetadataTag 
+              label="stable recurring investment"
+              tooltip="The calculator assumes you'll maintain the same recurring investment amount throughout the entire period. In practice, you should increase your contributions over time to account for salary increases and inflation."
+            />
+            <MetadataTag 
+              label="not adjusted for inflation"
+              tooltip="The results shown are in nominal terms and do not account for the effects of inflation on purchasing power."
             />
           </p>
         </div>
@@ -75,127 +83,140 @@ export const ReturnCalc = () => {
           setReturnRateFrequency(DEFAULT_VALUES.returnRateFrequency);
         }} />
       </TitleRow>
-      <InputRow>
-        <Label>
-          <LabelTag 
-            label="Initial Investment"
-            tooltip="A one-time, initial investment to fund your account."
+      
+      <InputGroup>
+        <InputRow>
+          <Label>
+            <LabelTag 
+              label="Initial Investment"
+              tooltip="A one-time, initial investment to fund your account."
+            />
+            :
+          </Label>
+          <MoneyInput
+            value={initialInvestment}
+            onChange={setInitialInvestment}
           />
-          :
-        </Label>
-        <MoneyInput
-          value={initialInvestment}
-          onChange={setInitialInvestment}
-        />
-      </InputRow>
+        </InputRow>
+      </InputGroup>
 
-      <InputRow>
-        <Label>
-          <LabelTag 
-            label="Recurring Investment"
-            tooltip="The amount of money you plan on repeatedly investing and the frequency at which you'll invest it."
+      <InputGroup>
+        <InputRow>
+          <Label>
+            <LabelTag 
+              label="Recurring Investment"
+              tooltip="The amount of money you plan on repeatedly investing and the frequency at which you'll invest it."
+            />
+            :
+          </Label>
+          <Dropdown 
+            value={recurringFrequency}
+            onChange={(e) => setRecurringFrequency(Number(e.target.value))}
+          >
+            <MenuItem value={10}>Annual</MenuItem>
+            <MenuItem value={20}>Semiannual</MenuItem>
+            <MenuItem value={30}>Quarterly</MenuItem>
+            <MenuItem value={40}>Monthly</MenuItem>
+            <MenuItem value={50}>Weekly</MenuItem>
+            <MenuItem value={60}>Daily</MenuItem>
+            <MenuItem value={70}>Continuously</MenuItem>
+          </Dropdown>
+          <MoneyInput
+            value={recurringInvestment}
+            onChange={setRecurringInvestment}
           />
-          :
-        </Label>
-        <Dropdown 
-          value={recurringFrequency}
-          onChange={(e) => setRecurringFrequency(Number(e.target.value))}
-        >
-          <MenuItem value={10}>Annual</MenuItem>
-          <MenuItem value={20}>Semiannual</MenuItem>
-          <MenuItem value={30}>Quarterly</MenuItem>
-          <MenuItem value={40}>Monthly</MenuItem>
-          <MenuItem value={50}>Weekly</MenuItem>
-          <MenuItem value={60}>Daily</MenuItem>
-          <MenuItem value={70}>Continuously</MenuItem>
-        </Dropdown>
-        <MoneyInput
-          value={recurringInvestment}
-          onChange={setRecurringInvestment}
-        />
-      </InputRow>
+        </InputRow>
 
-      <InputRow>
-        <Label>
-          <LabelTag 
-            label="Time Period"
-            tooltip="How long you will commit to investing and not withdrawing your funds."
+        <InputRow>
+          <Label>
+            <LabelTag 
+              label="Time Period"
+              tooltip="How long you will commit to investing and not withdrawing your funds."
+            />
+            :
+          </Label>
+          <NumberInput
+            value={timeValue}
+            onChange={setTimeValue}
           />
-          :
-        </Label>
-        <NumberInput
-          value={timeValue}
-          onChange={setTimeValue}
-        />
-        <Dropdown
-          value={timeUnit}
-          onChange={(e) => setTimeUnit(Number(e.target.value))}
-        >
-          <MenuItem value={10}>Days</MenuItem>
-          <MenuItem value={20}>Weeks</MenuItem>
-          <MenuItem value={30}>Months</MenuItem>
-          <MenuItem value={40}>Years</MenuItem>
-        </Dropdown>
-      </InputRow>
+          <Dropdown
+            value={timeUnit}
+            onChange={(e) => setTimeUnit(Number(e.target.value))}
+          >
+            <MenuItem value={10}>Days</MenuItem>
+            <MenuItem value={20}>Weeks</MenuItem>
+            <MenuItem value={30}>Months</MenuItem>
+            <MenuItem value={40}>Years</MenuItem>
+          </Dropdown>
+        </InputRow>
 
-      <InputRow>
-        <Label>
-          <LabelTag 
-            label="Return Rate"
-            tooltip="The expected rate of return on your investments and the frequency with which you expect the interest to compound. For most investments, set the rate to 10% and leave the frequency at annual."
+        <InputRow>
+          <Label>
+            <LabelTag 
+              label="Return Rate"
+              tooltip="The expected rate of return on your investments and the frequency with which you expect the interest to compound. For most investments, set the rate to 10% and leave the frequency at annual."
+            />
+            :
+          </Label>
+          <PercentageInput
+            value={returnRate}
+            onChange={setReturnRate}
           />
-          :
-        </Label>
-        <PercentageInput
-          value={returnRate}
-          onChange={setReturnRate}
-        />
-        <Dropdown
-          value={returnRateFrequency}
-          onChange={(e) => setReturnRateFrequency(Number(e.target.value))}
-        >
-          <MenuItem value={10}>Annual</MenuItem>
-          <MenuItem value={20}>Semiannual</MenuItem>
-          <MenuItem value={30}>Quarterly</MenuItem>
-          <MenuItem value={40}>Monthly</MenuItem>
-          <MenuItem value={50}>Weekly</MenuItem>
-          <MenuItem value={60}>Daily</MenuItem>
-          <MenuItem value={70}>Continuously</MenuItem>
-        </Dropdown>
-      </InputRow>
+          <Dropdown
+            value={returnRateFrequency}
+            onChange={(e) => setReturnRateFrequency(Number(e.target.value))}
+          >
+            <MenuItem value={10}>Annual</MenuItem>
+            <MenuItem value={20}>Semiannual</MenuItem>
+            <MenuItem value={30}>Quarterly</MenuItem>
+            <MenuItem value={40}>Monthly</MenuItem>
+            <MenuItem value={50}>Weekly</MenuItem>
+            <MenuItem value={60}>Daily</MenuItem>
+            <MenuItem value={70}>Continuously</MenuItem>
+          </Dropdown>
+        </InputRow>
+      </InputGroup>
 
-      <InputRow>
-        <Label>
-          <LabelTag 
-            label="Final Amount"
-            tooltip="The total value of your investment at the end of the time period, including both your contributions and investment returns."
-          />
-          :
-        </Label>
-        <ResultBox>${result.finalAmount.toLocaleString()}</ResultBox>
-      </InputRow>
+      <ResultsGroup>
+        <InputRow>
+          <Label>
+            <LabelTag 
+              label="Final Amount"
+              tooltip="The total value of your investment at the end of the time period."
+            />
+            :
+          </Label>
+          <ResultBox type="neutral">
+            ${result.finalAmount.toLocaleString()}
+          </ResultBox>
+        </InputRow>
 
-      <InputRow>
-        <Label>
-          <LabelTag 
-            label="Total Invested"
-            tooltip="The sum of your initial investment and all recurring contributions, not including any returns."
-          />
-          :
-        </Label>
-        <ResultBox>${result.totalInvested.toLocaleString()}</ResultBox>
-      </InputRow>
+        <InputRow>
+          <Label>
+            <LabelTag 
+              label="Total Invested"
+              tooltip="The sum of your initial investment and all recurring contributions."
+            />
+            :
+          </Label>
+          <ResultBox type="neutral">
+            ${result.totalInvested.toLocaleString()}
+          </ResultBox>
+        </InputRow>
 
-      <InputRow>
-        <Label>
-          <LabelTag 
-            label="Total Gains"
-            tooltip="The profit from your investments - the difference between your final amount and total invested."
-          />
-          :
-        </Label>
-        <ResultBox>${result.totalGains.toLocaleString()}</ResultBox>
-      </InputRow>
+        <InputRow>
+          <Label>
+            <LabelTag 
+              label="Total Gains"
+              tooltip="The profit from your investments."
+            />
+            :
+          </Label>
+          <ResultBox type={result.totalGains >= 0 ? 'gain' : 'loss'}>
+            ${result.totalGains.toLocaleString()}
+          </ResultBox>
+        </InputRow>
+      </ResultsGroup>
     </Container>
   );
 };

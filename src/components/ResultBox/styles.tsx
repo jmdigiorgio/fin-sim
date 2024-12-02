@@ -14,4 +14,13 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
   border: `1px solid ${theme.palette.mode === 'dark' 
     ? 'rgba(255, 255, 255, 0.1)'
     : 'rgba(0, 0, 0, 0.1)'}`,
+  transition: 'color 0.2s ease',
+  
+  '&.gain': {
+    color: theme.palette.mode === 'dark' ? '#4caf50' : '#2e7d32'
+  },
+  
+  '&.loss': {
+    color: theme.palette.mode === 'dark' ? '#f44336' : '#c62828'
+  }
 }));

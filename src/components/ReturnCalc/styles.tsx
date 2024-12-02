@@ -26,8 +26,11 @@ export const InputRow = styled(Box)({
 
 export const Label = styled('span')({
   fontFamily: 'var(--font-geist-sans)',
-  fontSize: '14px',
-  minWidth: '140px',
+  fontSize: '16px',
+  minWidth: '160px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '4px'
 });
 
 export const TitleRow = styled(Box)({

@@ -8,6 +8,8 @@ import { ResultBox } from '@/components/ResultBox';
 import { calculateReturns } from '@/utils/ReturnCalcMath';
 import { useState, useMemo } from 'react';
 import { ClearForm } from '@/components/ClearForm';
+import { MetadataTag } from '@/components/MetadataTag';
+import { LabelTag } from '@/components/LabelTag';
 
 const DEFAULT_VALUES = {
   initialInvestment: '',
@@ -54,7 +56,15 @@ export const ReturnCalc = () => {
   return (
     <Container>
       <TitleRow>
-        <h2>Return on Investment</h2>
+        <div>
+          <h2>Return on Investment</h2>
+          <p style={{ margin: 0 }}>
+            <MetadataTag 
+              label="stable return & recurring investment"
+              tooltip="This calculator assumes an average rate of return and a stable recurring investment over the entire period. The idea is that, in reality, the return rate will fluctuate, but, over time, it will average out to the rate you enter. You should also increase your recurring investment over time to account for inflation and salary increases."
+            />
+          </p>
+        </div>
         <ClearForm onClear={() => {
           setInitialInvestment(DEFAULT_VALUES.initialInvestment);
           setRecurringInvestment(DEFAULT_VALUES.recurringInvestment);
@@ -66,7 +76,13 @@ export const ReturnCalc = () => {
         }} />
       </TitleRow>
       <InputRow>
-        <Label>Initial Investment:</Label>
+        <Label>
+          <LabelTag 
+            label="Initial Investment"
+            tooltip="A one-time, initial investment to fund your account."
+          />
+          :
+        </Label>
         <MoneyInput
           value={initialInvestment}
           onChange={setInitialInvestment}
@@ -74,7 +90,13 @@ export const ReturnCalc = () => {
       </InputRow>
 
       <InputRow>
-        <Label>Recurring Investment:</Label>
+        <Label>
+          <LabelTag 
+            label="Recurring Investment"
+            tooltip="The amount of money you plan on repeatedly investing and the frequency at which you'll invest it."
+          />
+          :
+        </Label>
         <Dropdown 
           value={recurringFrequency}
           onChange={(e) => setRecurringFrequency(Number(e.target.value))}
@@ -94,7 +116,13 @@ export const ReturnCalc = () => {
       </InputRow>
 
       <InputRow>
-        <Label>Time Period:</Label>
+        <Label>
+          <LabelTag 
+            label="Time Period"
+            tooltip="How long you will commit to investing and not withdrawing your funds."
+          />
+          :
+        </Label>
         <NumberInput
           value={timeValue}
           onChange={setTimeValue}
@@ -111,7 +139,13 @@ export const ReturnCalc = () => {
       </InputRow>
 
       <InputRow>
-        <Label>Return Rate:</Label>
+        <Label>
+          <LabelTag 
+            label="Return Rate"
+            tooltip="The expected rate of return on your investments and the frequency with which you expect the interest to compound. For most investments, set the rate to 10% and leave the frequency at annual."
+          />
+          :
+        </Label>
         <PercentageInput
           value={returnRate}
           onChange={setReturnRate}
@@ -131,17 +165,35 @@ export const ReturnCalc = () => {
       </InputRow>
 
       <InputRow>
-        <Label>Final Amount:</Label>
+        <Label>
+          <LabelTag 
+            label="Final Amount"
+            tooltip="The total value of your investment at the end of the time period, including both your contributions and investment returns."
+          />
+          :
+        </Label>
         <ResultBox>${result.finalAmount.toLocaleString()}</ResultBox>
       </InputRow>
 
       <InputRow>
-        <Label>Total Invested:</Label>
+        <Label>
+          <LabelTag 
+            label="Total Invested"
+            tooltip="The sum of your initial investment and all recurring contributions, not including any returns."
+          />
+          :
+        </Label>
         <ResultBox>${result.totalInvested.toLocaleString()}</ResultBox>
       </InputRow>
 
       <InputRow>
-        <Label>Total Gains:</Label>
+        <Label>
+          <LabelTag 
+            label="Total Gains"
+            tooltip="The profit from your investments - the difference between your final amount and total invested."
+          />
+          :
+        </Label>
         <ResultBox>${result.totalGains.toLocaleString()}</ResultBox>
       </InputRow>
     </Container>

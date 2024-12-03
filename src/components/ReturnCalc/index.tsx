@@ -61,15 +61,15 @@ export const ReturnCalc = () => {
           <p style={{ margin: 0 }}>
             <MetadataTag 
               label="average return"
-              tooltip="This calculator uses an average rate of return. In reality, returns will fluctuate, but over time they should average out to the rate you enter."
+              tooltip="This calculator uses an average rate of return over the entire period. In reality, returns will fluctuate year-to-year."
             />
             <MetadataTag 
               label="stable recurring investment"
-              tooltip="The calculator assumes you'll maintain the same recurring investment amount throughout the entire period. In practice, you should increase your contributions over time to account for salary increases and inflation."
+              tooltip="This calculator assumes you'll maintain the same recurring investment amount throughout the entire period. In practice, you should increase your contributions over time to account for salary increases and inflation."
             />
             <MetadataTag 
               label="not adjusted for inflation"
-              tooltip="The results shown are in nominal terms and do not account for the effects of inflation on purchasing power."
+              tooltip="The results do not account for the effects of inflation on purchasing power. Every year, your money is worth less than the year before."
             />
           </p>
         </div>
@@ -131,7 +131,7 @@ export const ReturnCalc = () => {
           <Label>
             <LabelTag 
               label="Time Period"
-              tooltip="How long you will commit to investing and not withdrawing your funds."
+              tooltip="How long you plan on committing to investing and not withdrawing your funds."
             />
             :
           </Label>
@@ -154,7 +154,7 @@ export const ReturnCalc = () => {
           <Label>
             <LabelTag 
               label="Return Rate"
-              tooltip="The expected rate of return on your investments and the frequency with which you expect the interest to compound. For most investments, set the rate to 10% and leave the frequency at annual."
+              tooltip="The expected rate of return on your investments and the frequency with which you expect the interest to compound. Historical S&P 500 performance is 10% annually."
             />
             :
           </Label>

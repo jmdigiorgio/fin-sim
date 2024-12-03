@@ -1,7 +1,7 @@
 'use client';
 
-import { Header } from '@/components/Header';
-import { ReturnCalc } from '@/components/ReturnCalc';
+import { Header } from '@/components/layout/Header';
+import { ReturnCalc } from '@/components/calculators/ReturnCalc';
 import styles from "./page.module.css";
 
 export default function Home() {

@@ -1,6 +1,6 @@
 'use client';
 
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import Image from 'next/image';
 import { HeaderContainer, LogoContainer, AppName } from './styles';
 

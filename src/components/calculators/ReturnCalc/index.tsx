@@ -1,15 +1,15 @@
 import { Container, InputRow, Label, TitleRow, InputGroup, ResultsGroup } from './styles';
 import { MenuItem } from '@mui/material';
-import { Dropdown } from '@/components/Dropdown';
-import { MoneyInput } from '@/components/MoneyInput';
-import { NumberInput } from '@/components/NumberInput';
-import { PercentageInput } from '@/components/PercentageInput';
-import { ResultBox } from '@/components/ResultBox';
-import { calculateReturns } from '@/utils/ReturnCalcMath';
+import { Dropdown } from '@/components/shared/Dropdown';
+import { MoneyInput } from '@/components/shared/MoneyInput';
+import { NumberInput } from '@/components/shared/NumberInput';
+import { PercentageInput } from '@/components/shared/PercentageInput';
+import { ResultBox } from '@/components/shared/ResultBox';
+import { calculateReturns } from '@/utils/calculators/ReturnCalcMath';
 import { useState, useMemo } from 'react';
-import { ClearForm } from '@/components/ClearForm';
-import { MetadataTag } from '@/components/MetadataTag';
-import { LabelTag } from '@/components/LabelTag';
+import { ClearForm } from '@/components/shared/ClearForm';
+import { MetadataTag } from '@/components/shared/MetadataTag';
+import { LabelTag } from '@/components/shared/LabelTag';
 
 const DEFAULT_VALUES = {
   initialInvestment: '',

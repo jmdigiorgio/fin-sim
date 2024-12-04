@@ -11,7 +11,7 @@
   align-items: center;
   justify-items: center;
   min-height: 100svh;
-  padding: 120px 80px 80px 80px;
+  padding: 120px 40px 80px 104px;
   gap: 64px;
   font-family: var(--font-geist-sans);
 }
@@ -130,7 +130,7 @@ a.secondary {
 
 @media (max-width: 600px) {
   .page {
-    padding: 100px 16px 32px 16px;
+    padding: 100px 16px 32px 80px;
   }
 
   .main {

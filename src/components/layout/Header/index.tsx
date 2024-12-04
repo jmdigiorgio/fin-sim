@@ -1,22 +1,15 @@
 'use client';
 
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
-import Image from 'next/image';
-import { HeaderContainer, LogoContainer, AppName } from './styles';
+import { useSidePanel } from '@/components/layout/SidePanelContext';
+import { HeaderContainer } from './styles';
 
 export const Header = () => {
+  const { isOpen } = useSidePanel();
+  const sidebarWidth = isOpen ? 240 : 64;
+
   return (
-    <HeaderContainer>
-      <LogoContainer>
-        <Image
-          src="/favicon/logo-500x500.png"
-          alt="MockVest Logo"
-          width={40}
-          height={40}
-          className="logo"
-        />
-        <AppName>MockVest</AppName>
-      </LogoContainer>
+    <HeaderContainer sidebarWidth={sidebarWidth}>
       <ThemeToggle />
     </HeaderContainer>
   );

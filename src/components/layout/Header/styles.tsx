@@ -1,36 +1,24 @@
 import { styled } from '@mui/material/styles';
 
-export const HeaderContainer = styled('header')({
+export const HeaderContainer = styled('header', {
+  shouldForwardProp: (prop) => prop !== 'sidebarWidth',
+})<{ sidebarWidth: number }>(({ theme, sidebarWidth }) => ({
   position: 'fixed',
   top: 0,
-  left: 0,
+  left: `${sidebarWidth}px`,
   right: 0,
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'flex-end',
   alignItems: 'center',
-  padding: '20px',
+  padding: '12px',
+  height: '64px',
   zIndex: 1000,
+  transition: 'left 0.3s ease',
+  backgroundColor: theme.palette.mode === 'dark' 
+    ? '#1a1a1a'
+    : '#f5f5f5',
   
   '@media (max-width: 600px)': {
     padding: '16px',
   }
-});
-
-export const LogoContainer = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '12px',
-  
-  '& .logo': {
-    '@media (prefers-color-scheme: dark)': {
-      filter: 'brightness(0.9)'
-    }
-  }
-});
-
-export const AppName = styled('span')({
-  fontFamily: 'var(--font-geist-sans)',
-  fontSize: '24px',
-  fontWeight: 600,
-  color: 'var(--foreground)'
-});
+}));

@@ -1,3 +1,3 @@
-# MockVest
+# NestFund
 
-MockVest is to test investment strategies and portfolio management without risking real money. Currently WIP.
+NestFund is a personal finance, budgeting, and investing app.

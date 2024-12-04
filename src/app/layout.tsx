@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ThemeRegistryProvider from "@/components/layout/ThemeRegistry";
+import { SidePanelProvider } from '@/components/layout/SidePanelContext';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,8 +17,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "MockVest",
-  description: "MockVest - Mock Investment Portfolio",
+  title: "NestFund",
+  description: "NestFund - Personal finance, budgeting, and investing",
 };
 
 export default function RootLayout({
@@ -28,7 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeRegistryProvider>{children}</ThemeRegistryProvider>
+        <ThemeRegistryProvider>
+          <SidePanelProvider>
+            {children}
+          </SidePanelProvider>
+        </ThemeRegistryProvider>
       </body>
     </html>
   );

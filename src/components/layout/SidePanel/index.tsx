@@ -4,7 +4,6 @@ import { List, Divider } from '@mui/material';
 import { PanelContainer, PanelContent } from './styles';
 import { useSidePanel } from '@/components/layout/SidePanelContext';
 import { FunctionButton } from '@/components/shared/FunctionButton';
-import { SubfunctionButton } from '@/components/shared/SubfunctionButton';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import CottageIcon from '@mui/icons-material/Cottage';
 import { useTheme } from '@mui/material/styles';
@@ -46,11 +45,6 @@ export const SidePanel = () => {
             icon={CalculateIcon}
             label="Calculators"
             tooltip={isOpen ? "Investments, Loans, Mortgages, etc." : "Calculators"}
-          />
-          <SubfunctionButton 
-            href="/calculators/investment"
-            label="Investment"
-            tooltip="Calculate investment returns and growth"
           />
         </List>
       </PanelContent>

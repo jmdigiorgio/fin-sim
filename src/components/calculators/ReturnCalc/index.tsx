@@ -182,7 +182,7 @@ export const ReturnCalc = () => {
           <Label>
             <LabelTag 
               label="Final Amount"
-              tooltip="The total value of your investment at the end of the time period."
+              tooltip="The sum of the money that you invested and the return on investment."
             />
             :
           </Label>
@@ -195,7 +195,7 @@ export const ReturnCalc = () => {
           <Label>
             <LabelTag 
               label="Total Invested"
-              tooltip="The sum of your initial investment and all recurring contributions."
+              tooltip="All the money you put into the investment."
             />
             :
           </Label>
@@ -208,7 +208,7 @@ export const ReturnCalc = () => {
           <Label>
             <LabelTag 
               label="Total Gains"
-              tooltip="The profit from your investments."
+              tooltip="Your return on investment."
             />
             :
           </Label>

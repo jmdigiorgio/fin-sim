@@ -34,4 +34,6 @@ export const PageTitle = styled('h1')(({ theme }) => ({
   color: theme.palette.mode === 'dark' 
     ? 'rgba(255, 255, 255, 0.7)'
     : 'rgba(0, 0, 0, 0.7)',
+  display: 'flex',
+  alignItems: 'center',
 }));

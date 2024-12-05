@@ -36,8 +36,7 @@ export const SubfunctionButton = ({ href, label, tooltip, sx }: SubfunctionButto
         <StyledListItemText isOpen={isOpen}>
           <ListItemText 
             primary={
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ fontSize: '10px', opacity: 0.7 }}>•</span>
+              <span style={{ display: 'flex', alignItems: 'center' }}>
                 {label}
               </span>
             } 

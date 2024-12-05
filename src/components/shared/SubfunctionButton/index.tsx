@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ListItem, ListItemButton, ListItemText, Tooltip } from '@mui/material';
+import { ListItemButton, ListItemText, Tooltip } from '@mui/material';
 import { useSidePanel } from '@/components/layout/SidePanelContext';
 import { SxProps, Theme } from '@mui/material/styles';
 import { StyledListItem, StyledListItemText } from './styles';

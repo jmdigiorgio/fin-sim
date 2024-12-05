@@ -18,14 +18,21 @@ export const PanelContainer = styled(Box, {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  paddingTop: '20px',
+  paddingTop: 0,
+  borderRight: `1px solid ${theme.palette.mode === 'dark' 
+    ? 'rgba(255, 255, 255, 0.1)'
+    : 'rgba(0, 0, 0, 0.1)'}`,
 }));
 
 export const PanelContent = styled(Box)({
-  width: '240px',
+  width: '100%',
   height: '100%',
   padding: '20px',
+  paddingTop: '0px',
   transition: 'transform 0.3s ease',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
 });
 
 export const CollapseButton = styled(Box)({
@@ -43,13 +50,21 @@ export const CollapseButton = styled(Box)({
 });
 
 export const LogoButton = styled(Box)({
+  position: 'absolute',
+  top: '20px',
+  left: '12px',
   height: '40px',
   width: '40px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   transition: 'opacity 0.2s ease',
-  opacity: 0.7,
+  opacity: 0.8,
+  '& .MuiIconButton-root': {
+    '&:hover': {
+      backgroundColor: 'transparent',
+    }
+  },
   '& .logo': {
     transition: 'transform 0.2s ease',
   },
@@ -57,6 +72,6 @@ export const LogoButton = styled(Box)({
     opacity: 1,
     '& .logo': {
       transform: 'scale(1.05)',
-    },
-  },
+    }
+  }
 }); 

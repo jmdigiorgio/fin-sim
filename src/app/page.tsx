@@ -2,7 +2,6 @@
 
 import { Header } from '@/components/layout/Header';
 import { SidePanel } from '@/components/layout/SidePanel';
-import { ReturnCalc } from '@/components/calculators/ReturnCalc';
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -11,7 +10,7 @@ export default function Home() {
       <SidePanel />
       <Header />
       <main className={styles.main}>
-        <ReturnCalc />
+        {/* Content will go here */}
       </main>
     </div>
   );

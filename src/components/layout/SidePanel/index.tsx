@@ -1,37 +1,58 @@
 'use client';
 
-import { IconButton } from '@mui/material';
-import Image from 'next/image';
-import { PanelContainer, PanelContent, LogoButton } from './styles';
+import { List, Divider } from '@mui/material';
+import { PanelContainer, PanelContent } from './styles';
 import { useSidePanel } from '@/components/layout/SidePanelContext';
-import { AppLogo } from '@/components/layout/AppLogo';
-import { CollapseButton } from '@/components/shared/CollapseButton';
+import { FunctionButton } from '@/components/shared/FunctionButton';
+import { SubfunctionButton } from '@/components/shared/SubfunctionButton';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import CottageIcon from '@mui/icons-material/Cottage';
+import { useTheme } from '@mui/material/styles';
 
 export const SidePanel = () => {
-  const { isOpen, togglePanel } = useSidePanel();
+  const { isOpen } = useSidePanel();
+  const theme = useTheme();
+
+  const nestFundButtonStyle = {
+    '& .MuiListItemIcon-root': {
+      color: theme.palette.mode === 'dark' ? '#33ffb8' : '#1e8561',
+    },
+    '& .MuiListItemText-primary': {
+      color: theme.palette.mode === 'dark' ? '#33ffb8' : '#1e8561',
+    }
+  };
 
   return (
     <PanelContainer isOpen={isOpen}>
-      {isOpen ? (
-        <>
-          <AppLogo />
-          <CollapseButton onClick={togglePanel} />
-        </>
-      ) : (
-        <LogoButton>
-          <IconButton onClick={togglePanel} color="inherit" aria-label="open panel">
-            <Image
-              src="/logo/logo-500x500.png"
-              alt="NestFund Logo"
-              width={40}
-              height={40}
-              className="logo"
-            />
-          </IconButton>
-        </LogoButton>
-      )}
       <PanelContent>
-        {/* Content will go here later */}
+        <List sx={{ 
+          width: '100%', 
+          padding: 0,
+          '& .MuiListItem-root': {
+            width: '100%',
+            justifyContent: 'center'
+          }
+        }}>
+          <FunctionButton 
+            href="/"
+            icon={CottageIcon}
+            label="NestFund"
+            tooltip="Home"
+            sx={nestFundButtonStyle}
+          />
+          <Divider sx={{ my: 1 }} />
+          <FunctionButton 
+            href="/calculators"
+            icon={CalculateIcon}
+            label="Calculators"
+            tooltip={isOpen ? "Investments, Loans, Mortgages, etc." : "Calculators"}
+          />
+          <SubfunctionButton 
+            href="/calculators/investment"
+            label="Investment"
+            tooltip="Calculate investment returns and growth"
+          />
+        </List>
       </PanelContent>
     </PanelContainer>
   );

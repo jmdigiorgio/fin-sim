@@ -234,3 +234,18 @@ a.secondary {
     margin-bottom: 20px;
   }
 }
+
+.toolsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.toolsHeader {
+  font-family: var(--font-geist-sans);
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}

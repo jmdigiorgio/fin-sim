@@ -70,3 +70,18 @@ export const TitleRow = styled(Box)({
     fontFamily: 'var(--font-geist-sans)',
   }
 });
+
+export const ContentWrapper = styled('div')({
+  display: 'flex',
+  gap: '32px',
+  width: '100%',
+  maxWidth: '1200px',
+});
+
+export const ChartWrapper = styled('div')({
+  flex: 1,
+  minWidth: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '24px'
+});

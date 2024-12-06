@@ -13,3 +13,9 @@ export interface ReturnCalcResult {
   totalInvested: number;
   totalGains: number;
 }
+
+export interface ChartDataPoint {
+  period: string;
+  investment: number;
+  interest: number;
+}

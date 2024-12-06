@@ -17,12 +17,14 @@ const MainContent = styled('main', {
   shouldForwardProp: (prop) => prop !== 'sidebarWidth',
 })<{ sidebarWidth: number }>(({ sidebarWidth }) => ({
   marginLeft: `${sidebarWidth}px`,
-  marginTop: '64px', // Header height
+  marginTop: '64px',
   flex: 1,
   padding: '32px',
   transition: 'margin-left 0.3s ease',
   display: 'flex',
   justifyContent: 'center',
+  maxWidth: 'calc(1600px - ${sidebarWidth}px)',
+  width: '100%'
 }));
 
 export default function InvestmentCalculator() {

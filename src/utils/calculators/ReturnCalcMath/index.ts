@@ -1,4 +1,4 @@
-import { ReturnCalcInputs, ReturnCalcResult } from './types';
+import { ReturnCalcInputs, ReturnCalcResult, ChartDataPoint } from './types';
 
 export const calculateReturns = (inputs: ReturnCalcInputs): ReturnCalcResult => {
   // Early return if essential values are invalid
@@ -79,4 +79,44 @@ export const calculateReturns = (inputs: ReturnCalcInputs): ReturnCalcResult => 
     totalInvested: Math.round(totalInvested * 100) / 100,
     totalGains: Math.round((finalAmount - totalInvested) * 100) / 100
   };
+};
+
+export const generateChartData = (inputs: ReturnCalcInputs): ChartDataPoint[] => {
+  const data: ChartDataPoint[] = [];
+  const periods = 10;
+  
+  let previousResult = calculateReturns({
+    ...inputs,
+    timeValue: 0
+  });
+  
+  for (let i = 1; i <= periods; i++) {
+    const periodInputs = {
+      ...inputs,
+      timeValue: (inputs.timeValue / periods) * i
+    };
+    
+    const result = calculateReturns(periodInputs);
+    
+    // Calculate period-specific values
+    const periodInvestment = result.totalInvested - previousResult.totalInvested;
+    const periodInterest = (result.finalAmount - result.totalInvested) - 
+                          (previousResult.finalAmount - previousResult.totalInvested);
+    
+    previousResult = result;
+    
+    const period = `${Math.round(periodInputs.timeValue)}${
+      inputs.timeUnit === 10 ? 'd' : 
+      inputs.timeUnit === 20 ? 'w' : 
+      inputs.timeUnit === 30 ? 'm' : 'y'
+    }`;
+    
+    data.push({
+      period,
+      investment: Math.round(periodInvestment * 100) / 100,
+      interest: Math.round(periodInterest * 100) / 100
+    });
+  }
+  
+  return data;
 };

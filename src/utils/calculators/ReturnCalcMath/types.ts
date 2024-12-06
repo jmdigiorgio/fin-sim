@@ -6,6 +6,10 @@ export interface ReturnCalcInputs {
   timeUnit: number;
   returnRate: number;
   returnRateFrequency: number;
+  enablePeriodicIncrease?: boolean;
+  periodicIncreaseAmount?: number;
+  periodicIncreasePercent?: number;
+  periodicIncreaseFrequency?: number;
 }
 
 export interface ReturnCalcResult {

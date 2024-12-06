@@ -33,6 +33,8 @@ export const calculateReturns = (inputs: ReturnCalcInputs): ReturnCalcResult => 
 
   const recurringFreq = frequencyMultiplier[inputs.recurringFrequency] || 12;
   const returnFreq = frequencyMultiplier[inputs.returnRateFrequency] || 1;
+  const increaseFreq = inputs.periodicIncreaseFrequency ? 
+    frequencyMultiplier[inputs.periodicIncreaseFrequency] || 1 : 1;
 
   // Calculate effective annual rate
   const effectiveRate = (returnFreq === Infinity)
@@ -42,38 +44,49 @@ export const calculateReturns = (inputs: ReturnCalcInputs): ReturnCalcResult => 
   const r = effectiveRate;
   const t = years;
   const P = inputs.initialInvestment;
-  const PMT = inputs.recurringInvestment;
-
-  // Special case for 0% return rate
-  if (r === 0) {
-    const totalPeriods = recurringFreq === Infinity 
-      ? t 
-      : t * recurringFreq;
-    return {
-      finalAmount: P + (PMT * totalPeriods),
-      totalInvested: P + (PMT * totalPeriods),
-      totalGains: 0
-    };
-  }
-
-  // Calculate final amount
   let finalAmount = P * Math.pow(1 + r, t); // Initial investment with compound interest
+  let totalInvested = P;
 
-  if (PMT > 0) {
-    if (recurringFreq === Infinity) {
-      // Continuous payments
-      finalAmount += PMT * ((Math.exp(r * t) - 1) / r);
-    } else {
-      // Discrete payments
-      const ratePerPeriod = r / recurringFreq;
-      const periods = t * recurringFreq;
-      finalAmount += PMT * ((Math.pow(1 + ratePerPeriod, periods) - 1) / ratePerPeriod);
+  // Handle recurring investments with periodic increases
+  if (inputs.recurringInvestment > 0) {
+    const baseAmount = inputs.recurringInvestment;
+    const periodsPerYear = recurringFreq === Infinity ? 365 : recurringFreq;
+    
+    for (let year = 0; year < years; year++) {
+      // Calculate the recurring investment amount for this year
+      let currentAmount = baseAmount;
+      if (inputs.enablePeriodicIncrease && year > 0) {
+        const increasePeriods = Math.floor(year * (increaseFreq / 1)); // Convert to increase frequency periods
+        if (inputs.periodicIncreaseAmount) {
+          currentAmount += inputs.periodicIncreaseAmount * increasePeriods;
+        } else if (inputs.periodicIncreasePercent) {
+          currentAmount *= Math.pow(1 + inputs.periodicIncreasePercent / 100, increasePeriods);
+        }
+      }
+
+      // Calculate contributions and returns for this year
+      if (recurringFreq === Infinity) {
+        // Continuous contributions
+        const yearStart = year;
+        const yearEnd = Math.min(year + 1, years);
+        finalAmount += currentAmount * ((Math.exp(r * (years - yearStart)) - 
+                                      Math.exp(r * (years - yearEnd))) / r);
+        totalInvested += currentAmount * (yearEnd - yearStart);
+      } else {
+        // Discrete contributions
+        const paymentsThisYear = year + 1 > years ? 
+          (years % 1) * periodsPerYear : 
+          periodsPerYear;
+        
+        for (let i = 0; i < paymentsThisYear; i++) {
+          const timeToMaturity = years - year - i/periodsPerYear;
+          finalAmount += currentAmount * Math.pow(1 + r, timeToMaturity);
+          totalInvested += currentAmount;
+        }
+      }
     }
   }
 
-  // Calculate total invested amount
-  const totalInvested = P + (PMT * (recurringFreq === Infinity ? t : recurringFreq * t));
-  
   return {
     finalAmount: Math.round(finalAmount * 100) / 100,
     totalInvested: Math.round(totalInvested * 100) / 100,
@@ -85,27 +98,32 @@ export const generateChartData = (inputs: ReturnCalcInputs): ChartDataPoint[] =>
   const data: ChartDataPoint[] = [];
   const periods = 10;
   
+  // Calculate the time increment for each period
+  const timeIncrement = inputs.timeValue / periods;
+  
   let previousResult = calculateReturns({
     ...inputs,
     timeValue: 0
   });
   
   for (let i = 1; i <= periods; i++) {
-    const periodInputs = {
+    // Calculate current period
+    const currentTime = timeIncrement * i;
+    const currentResult = calculateReturns({
       ...inputs,
-      timeValue: (inputs.timeValue / periods) * i
-    };
-    
-    const result = calculateReturns(periodInputs);
-    
-    // Calculate period-specific values
-    const periodInvestment = result.totalInvested - previousResult.totalInvested;
-    const periodInterest = (result.finalAmount - result.totalInvested) - 
+      timeValue: currentTime
+    });
+
+    // For this period only:
+    const periodInvestment = currentResult.totalInvested - previousResult.totalInvested;
+    const periodInterest = (currentResult.finalAmount - currentResult.totalInvested) - 
                           (previousResult.finalAmount - previousResult.totalInvested);
     
-    previousResult = result;
+    // Store current result for next iteration
+    previousResult = currentResult;
     
-    const period = `${Math.round(periodInputs.timeValue)}${
+    // Format period label
+    const period = `${Math.round(currentTime)}${
       inputs.timeUnit === 10 ? 'd' : 
       inputs.timeUnit === 20 ? 'w' : 
       inputs.timeUnit === 30 ? 'm' : 'y'

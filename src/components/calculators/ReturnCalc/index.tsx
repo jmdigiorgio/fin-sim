@@ -1,5 +1,5 @@
 import { Container, InputRow, Label, TitleRow, InputGroup, ResultsGroup, ContentWrapper, ChartWrapper } from './styles';
-import { MenuItem } from '@mui/material';
+import { MenuItem, Checkbox, FormControlLabel } from '@mui/material';
 import { Dropdown } from '@/components/shared/Dropdown';
 import { MoneyInput } from '@/components/shared/MoneyInput';
 import { NumberInput } from '@/components/shared/NumberInput';
@@ -11,6 +11,7 @@ import { ClearForm } from '@/components/shared/ClearForm';
 import { MetadataTag } from '@/components/shared/MetadataTag';
 import { LabelTag } from '@/components/shared/LabelTag';
 import { BarChart } from '@/components/dataVis/BarChart';
+import { useTheme } from '@mui/material/styles';
 
 const DEFAULT_VALUES = {
   initialInvestment: '',
@@ -19,10 +20,14 @@ const DEFAULT_VALUES = {
   timeUnit: 40,
   returnRate: '',
   recurringFrequency: 40,
-  returnRateFrequency: 10
+  returnRateFrequency: 10,
+  periodicIncreaseAmount: '',
+  periodicIncreasePercent: '',
+  periodicIncreaseFrequency: 10
 };
 
 export const ReturnCalc = () => {
+  const theme = useTheme();
   const [initialInvestment, setInitialInvestment] = useState(DEFAULT_VALUES.initialInvestment);
   const [recurringInvestment, setRecurringInvestment] = useState(DEFAULT_VALUES.recurringInvestment);
   const [timeValue, setTimeValue] = useState(DEFAULT_VALUES.timeValue);
@@ -30,6 +35,10 @@ export const ReturnCalc = () => {
   const [returnRate, setReturnRate] = useState(DEFAULT_VALUES.returnRate);
   const [recurringFrequency, setRecurringFrequency] = useState(DEFAULT_VALUES.recurringFrequency);
   const [returnRateFrequency, setReturnRateFrequency] = useState(DEFAULT_VALUES.returnRateFrequency);
+  const [enablePeriodicIncrease, setEnablePeriodicIncrease] = useState(false);
+  const [periodicIncreaseAmount, setPeriodicIncreaseAmount] = useState('');
+  const [periodicIncreasePercent, setPeriodicIncreasePercent] = useState('');
+  const [periodicIncreaseFrequency, setPeriodicIncreaseFrequency] = useState(10);
 
   const result = useMemo(() => {
     const inputs = {
@@ -39,12 +48,18 @@ export const ReturnCalc = () => {
       timeValue: Math.max(parseFloat(timeValue) || 0, 0),
       timeUnit,
       returnRate: parseFloat(returnRate) || 0,
-      returnRateFrequency
+      returnRateFrequency,
+      enablePeriodicIncrease,
+      periodicIncreaseAmount: parseFloat(periodicIncreaseAmount) || 0,
+      periodicIncreasePercent: parseFloat(periodicIncreasePercent) || 0,
+      periodicIncreaseFrequency
     };
     
     return calculateReturns(inputs);
   }, [initialInvestment, recurringInvestment, recurringFrequency, 
-      timeValue, timeUnit, returnRate, returnRateFrequency]);
+      timeValue, timeUnit, returnRate, returnRateFrequency,
+      enablePeriodicIncrease, periodicIncreaseAmount,
+      periodicIncreasePercent, periodicIncreaseFrequency]);
 
   const chartData = useMemo(() => {
     const inputs = {
@@ -54,12 +69,18 @@ export const ReturnCalc = () => {
       timeValue: Math.max(parseFloat(timeValue) || 0, 0),
       timeUnit,
       returnRate: parseFloat(returnRate) || 0,
-      returnRateFrequency
+      returnRateFrequency,
+      enablePeriodicIncrease,
+      periodicIncreaseAmount: parseFloat(periodicIncreaseAmount) || 0,
+      periodicIncreasePercent: parseFloat(periodicIncreasePercent) || 0,
+      periodicIncreaseFrequency
     };
     
     return generateChartData(inputs);
   }, [initialInvestment, recurringInvestment, recurringFrequency, 
-      timeValue, timeUnit, returnRate, returnRateFrequency]);
+      timeValue, timeUnit, returnRate, returnRateFrequency,
+      enablePeriodicIncrease, periodicIncreaseAmount,
+      periodicIncreasePercent, periodicIncreaseFrequency]);
 
   return (
     <ContentWrapper>
@@ -73,8 +94,11 @@ export const ReturnCalc = () => {
                 tooltip="This calculator uses an average rate of return over the entire period. In reality, returns will fluctuate year-to-year."
               />
               <MetadataTag 
-                label="stable recurring investment"
-                tooltip="This calculator assumes you'll maintain the same recurring investment amount throughout the entire period. In practice, you should increase your contributions over time to account for salary increases and inflation."
+                label={enablePeriodicIncrease ? "variable recurring investment" : "stable recurring investment"}
+                tooltip={enablePeriodicIncrease 
+                  ? "Your recurring investment amount will increase with time. This is best practice."
+                  : "This calculator assumes you'll maintain the same recurring investment amount throughout the entire period. In practice, you should increase your contributions over time to account for salary increases and inflation."
+                }
               />
               <MetadataTag 
                 label="not adjusted for inflation"
@@ -90,6 +114,10 @@ export const ReturnCalc = () => {
             setReturnRate(DEFAULT_VALUES.returnRate);
             setRecurringFrequency(DEFAULT_VALUES.recurringFrequency);
             setReturnRateFrequency(DEFAULT_VALUES.returnRateFrequency);
+            setEnablePeriodicIncrease(false);
+            setPeriodicIncreaseAmount(DEFAULT_VALUES.periodicIncreaseAmount);
+            setPeriodicIncreasePercent(DEFAULT_VALUES.periodicIncreasePercent);
+            setPeriodicIncreaseFrequency(DEFAULT_VALUES.periodicIncreaseFrequency);
           }} />
         </TitleRow>
         
@@ -135,6 +163,58 @@ export const ReturnCalc = () => {
               onChange={setRecurringInvestment}
             />
           </InputRow>
+
+          <InputRow sx={{ paddingLeft: '160px', marginTop: '8px' }}>
+            <FormControlLabel
+              control={
+                <Checkbox 
+                  checked={enablePeriodicIncrease}
+                  onChange={(e) => setEnablePeriodicIncrease(e.target.checked)}
+                  size="small"
+                />
+              }
+              label={
+                <LabelTag 
+                  label="Increase periodically"
+                  tooltip="Automatically increase your recurring investment amount at regular intervals."
+                />
+              }
+            />
+          </InputRow>
+
+          {enablePeriodicIncrease && (
+            <InputRow sx={{ paddingLeft: '160px', marginTop: '8px' }}>
+              <MoneyInput
+                value={periodicIncreaseAmount}
+                onChange={setPeriodicIncreaseAmount}
+                placeholder="0.00"
+              />
+              <span style={{ 
+                margin: '0 8px',
+                color: theme.palette.mode === 'dark' 
+                  ? 'rgba(255, 255, 255, 0.7)' 
+                  : 'rgba(0, 0, 0, 0.6)'
+              }}>
+                or
+              </span>
+              <PercentageInput
+                value={periodicIncreasePercent}
+                onChange={setPeriodicIncreasePercent}
+                placeholder="0"
+              />
+              <Dropdown 
+                value={periodicIncreaseFrequency}
+                onChange={(e) => setPeriodicIncreaseFrequency(Number(e.target.value))}
+              >
+                <MenuItem value={10}>Annual</MenuItem>
+                <MenuItem value={20}>Semiannual</MenuItem>
+                <MenuItem value={30}>Quarterly</MenuItem>
+                <MenuItem value={40}>Monthly</MenuItem>
+                <MenuItem value={50}>Weekly</MenuItem>
+                <MenuItem value={60}>Daily</MenuItem>
+              </Dropdown>
+            </InputRow>
+          )}
 
           <InputRow>
             <Label>

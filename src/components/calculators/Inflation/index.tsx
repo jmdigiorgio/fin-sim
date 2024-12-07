@@ -4,6 +4,7 @@ import { PercentageInput } from '@/components/shared/PercentageInput';
 import { LabelTag } from '@/components/shared/LabelTag';
 import { ResultBox } from '@/components/shared/ResultBox';
 import { MetadataTag } from '@/components/shared/MetadataTag';
+import{ calculateInflationAdjustedValue } from '@/math/inflation/adjustValue';
 
 interface InflationProps {
   finalAmount: number;
@@ -25,14 +26,18 @@ export const Inflation = ({ finalAmount, totalInvested, timeValue, timeUnit }: I
 
   const years = timeValue * yearsMultiplier;
 
-  // Calculate inflation-adjusted values
-  const adjustedAmount = years === 0
-    ? finalAmount
-    : finalAmount / Math.pow(1 + (Number(inflationRate) / 100), years);
+  // Calculate inflation-adjusted values using the new utility
+  const finalAmountAdjusted = calculateInflationAdjustedValue({
+    amount: finalAmount,
+    years,
+    inflationRate: Number(inflationRate)
+  });
 
-  const adjustedInvested = years === 0
-    ? totalInvested
-    : totalInvested / Math.pow(1 + (Number(inflationRate) / 100), years);
+  const investedAmountAdjusted = calculateInflationAdjustedValue({
+    amount: totalInvested,
+    years,
+    inflationRate: Number(inflationRate)
+  });
 
   // Get time unit label
   const timeUnitLabel = {
@@ -113,7 +118,7 @@ export const Inflation = ({ finalAmount, totalInvested, timeValue, timeUnit }: I
             :
           </Label>
           <ResultBox type="loss">
-            ${Math.round(adjustedAmount).toLocaleString()}
+            ${Math.round(finalAmountAdjusted.adjustedAmount).toLocaleString()}
           </ResultBox>
         </InputRow>
 
@@ -126,7 +131,7 @@ export const Inflation = ({ finalAmount, totalInvested, timeValue, timeUnit }: I
             :
           </Label>
           <ResultBox type="loss">
-            ${Math.round(adjustedInvested).toLocaleString()}
+            ${Math.round(investedAmountAdjusted.adjustedAmount).toLocaleString()}
           </ResultBox>
         </InputRow>
       </ResultsGroup>

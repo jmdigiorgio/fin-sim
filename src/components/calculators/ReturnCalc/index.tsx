@@ -5,83 +5,90 @@ import { MoneyInput } from '@/components/shared/MoneyInput';
 import { NumberInput } from '@/components/shared/NumberInput';
 import { PercentageInput } from '@/components/shared/PercentageInput';
 import { ResultBox } from '@/components/shared/ResultBox';
-import { calculateReturns, generateChartData } from '@/utils/calculators/ReturnCalcMath';
+import { calculateInvestmentReturns } from '@/math/investment/recurringInvestment';
+import { generateChartData } from '@/math/investment/chartData';
 import { useState, useMemo } from 'react';
 import { ClearForm } from '@/components/shared/ClearForm';
 import { MetadataTag } from '@/components/shared/MetadataTag';
 import { LabelTag } from '@/components/shared/LabelTag';
 import { BarChart } from '@/components/dataVis/BarChart';
-import { useTheme } from '@mui/material/styles';
+import { CompoundingFrequency, InvestmentResult, InvestmentInputs } from '@/math/investment/types';
 import { Inflation } from '@/components/calculators/Inflation';
 
 const DEFAULT_VALUES = {
   initialInvestment: '',
   recurringInvestment: '',
-  timeValue: '',
-  timeUnit: 40,
+  years: '',
   returnRate: '',
-  recurringFrequency: 40,
-  returnRateFrequency: 10,
-  periodicIncreaseAmount: '',
+  recurringFrequency: CompoundingFrequency.MONTHLY,
+  returnRateFrequency: CompoundingFrequency.ANNUALLY,
   periodicIncreasePercent: '',
-  periodicIncreaseFrequency: 10
 };
 
 export const ReturnCalc = () => {
-  const theme = useTheme();
   const [initialInvestment, setInitialInvestment] = useState(DEFAULT_VALUES.initialInvestment);
   const [recurringInvestment, setRecurringInvestment] = useState(DEFAULT_VALUES.recurringInvestment);
-  const [timeValue, setTimeValue] = useState(DEFAULT_VALUES.timeValue);
-  const [timeUnit, setTimeUnit] = useState(DEFAULT_VALUES.timeUnit);
+  const [years, setYears] = useState(DEFAULT_VALUES.years);
   const [returnRate, setReturnRate] = useState(DEFAULT_VALUES.returnRate);
   const [recurringFrequency, setRecurringFrequency] = useState(DEFAULT_VALUES.recurringFrequency);
   const [returnRateFrequency, setReturnRateFrequency] = useState(DEFAULT_VALUES.returnRateFrequency);
   const [enablePeriodicIncrease, setEnablePeriodicIncrease] = useState(false);
-  const [periodicIncreaseAmount, setPeriodicIncreaseAmount] = useState('');
-  const [periodicIncreasePercent, setPeriodicIncreasePercent] = useState('');
-  const [periodicIncreaseFrequency, setPeriodicIncreaseFrequency] = useState(10);
+  const [periodicIncreasePercent, setPeriodicIncreasePercent] = useState('0');
 
-  const result = useMemo(() => {
-    const inputs = {
+  const result = useMemo((): InvestmentResult => {
+    const periodicAmount = parseFloat(recurringInvestment) || 0;
+    
+    const monthlyEquivalent = periodicAmount * (recurringFrequency / CompoundingFrequency.MONTHLY);
+
+    const inputs: InvestmentInputs = {
       initialInvestment: parseFloat(initialInvestment) || 0,
-      recurringInvestment: parseFloat(recurringInvestment) || 0,
-      recurringFrequency,
-      timeValue: Math.max(parseFloat(timeValue) || 0, 0),
-      timeUnit,
-      returnRate: parseFloat(returnRate) || 0,
-      returnRateFrequency,
-      enablePeriodicIncrease,
-      periodicIncreaseAmount: parseFloat(periodicIncreaseAmount) || 0,
-      periodicIncreasePercent: parseFloat(periodicIncreasePercent) || 0,
-      periodicIncreaseFrequency
+      monthlyContribution: monthlyEquivalent,
+      years: Math.max(parseFloat(years) || 0, 0),
+      annualRate: parseFloat(returnRate) || 0,
+      compoundingFrequency: returnRateFrequency,
+      contributionFrequency: recurringFrequency,
+      annualContributionIncrease: enablePeriodicIncrease ? 
+        (parseFloat(periodicIncreasePercent) || 0) : 0
     };
     
-    return calculateReturns(inputs);
-  }, [initialInvestment, recurringInvestment, recurringFrequency, 
-      timeValue, timeUnit, returnRate, returnRateFrequency,
-      enablePeriodicIncrease, periodicIncreaseAmount,
-      periodicIncreasePercent, periodicIncreaseFrequency]);
+    return calculateInvestmentReturns(inputs);
+  }, [
+    initialInvestment, 
+    recurringInvestment, 
+    years, 
+    returnRate,
+    returnRateFrequency,
+    recurringFrequency,
+    enablePeriodicIncrease,
+    periodicIncreasePercent
+  ]);
 
   const chartData = useMemo(() => {
+    const monthlyEquivalent = (parseFloat(recurringInvestment) || 0) * 
+      (CompoundingFrequency.MONTHLY / recurringFrequency);
+
     const inputs = {
       initialInvestment: parseFloat(initialInvestment) || 0,
-      recurringInvestment: parseFloat(recurringInvestment) || 0,
-      recurringFrequency,
-      timeValue: Math.max(parseFloat(timeValue) || 0, 0),
-      timeUnit,
-      returnRate: parseFloat(returnRate) || 0,
-      returnRateFrequency,
-      enablePeriodicIncrease,
-      periodicIncreaseAmount: parseFloat(periodicIncreaseAmount) || 0,
-      periodicIncreasePercent: parseFloat(periodicIncreasePercent) || 0,
-      periodicIncreaseFrequency
+      monthlyContribution: monthlyEquivalent,
+      years: Math.max(parseFloat(years) || 0, 0),
+      annualRate: parseFloat(returnRate) || 0,
+      compoundingFrequency: returnRateFrequency,
+      contributionFrequency: recurringFrequency,
+      annualContributionIncrease: enablePeriodicIncrease ? 
+        (parseFloat(periodicIncreasePercent) || 0) : 0
     };
     
     return generateChartData(inputs);
-  }, [initialInvestment, recurringInvestment, recurringFrequency, 
-      timeValue, timeUnit, returnRate, returnRateFrequency,
-      enablePeriodicIncrease, periodicIncreaseAmount,
-      periodicIncreasePercent, periodicIncreaseFrequency]);
+  }, [
+    initialInvestment, 
+    recurringInvestment, 
+    years, 
+    returnRate,
+    returnRateFrequency,
+    recurringFrequency,
+    enablePeriodicIncrease,
+    periodicIncreasePercent
+  ]);
 
   return (
     <ContentWrapper>
@@ -110,15 +117,12 @@ export const ReturnCalc = () => {
           <ClearForm onClear={() => {
             setInitialInvestment(DEFAULT_VALUES.initialInvestment);
             setRecurringInvestment(DEFAULT_VALUES.recurringInvestment);
-            setTimeValue(DEFAULT_VALUES.timeValue);
-            setTimeUnit(DEFAULT_VALUES.timeUnit);
+            setYears(DEFAULT_VALUES.years);
             setReturnRate(DEFAULT_VALUES.returnRate);
             setRecurringFrequency(DEFAULT_VALUES.recurringFrequency);
             setReturnRateFrequency(DEFAULT_VALUES.returnRateFrequency);
             setEnablePeriodicIncrease(false);
-            setPeriodicIncreaseAmount(DEFAULT_VALUES.periodicIncreaseAmount);
             setPeriodicIncreasePercent(DEFAULT_VALUES.periodicIncreasePercent);
-            setPeriodicIncreaseFrequency(DEFAULT_VALUES.periodicIncreaseFrequency);
           }} />
         </TitleRow>
         
@@ -147,22 +151,31 @@ export const ReturnCalc = () => {
               />
               :
             </Label>
-            <Dropdown 
-              value={recurringFrequency}
-              onChange={(e) => setRecurringFrequency(Number(e.target.value))}
-            >
-              <MenuItem value={10}>Annual</MenuItem>
-              <MenuItem value={20}>Semiannual</MenuItem>
-              <MenuItem value={30}>Quarterly</MenuItem>
-              <MenuItem value={40}>Monthly</MenuItem>
-              <MenuItem value={50}>Weekly</MenuItem>
-              <MenuItem value={60}>Daily</MenuItem>
-              <MenuItem value={70}>Continuously</MenuItem>
-            </Dropdown>
             <MoneyInput
               value={recurringInvestment}
               onChange={setRecurringInvestment}
             />
+          </InputRow>
+
+          <InputRow>
+            <Label>
+              <LabelTag 
+                label="Contribution Frequency"
+                tooltip="How often you'll invest"
+              />
+              :
+            </Label>
+            <Dropdown
+              value={recurringFrequency}
+              onChange={(e) => setRecurringFrequency(Number(e.target.value))}
+            >
+              <MenuItem value={CompoundingFrequency.ANNUALLY}>Annual</MenuItem>
+              <MenuItem value={CompoundingFrequency.SEMI_ANNUALLY}>Semiannual</MenuItem>
+              <MenuItem value={CompoundingFrequency.QUARTERLY}>Quarterly</MenuItem>
+              <MenuItem value={CompoundingFrequency.MONTHLY}>Monthly</MenuItem>
+              <MenuItem value={CompoundingFrequency.WEEKLY}>Weekly</MenuItem>
+              <MenuItem value={CompoundingFrequency.DAILY}>Daily</MenuItem>
+            </Dropdown>
           </InputRow>
 
           <InputRow sx={{ paddingLeft: '160px', marginTop: '8px' }}>
@@ -184,60 +197,40 @@ export const ReturnCalc = () => {
           </InputRow>
 
           {enablePeriodicIncrease && (
-            <InputRow sx={{ paddingLeft: '160px', marginTop: '8px' }}>
-              <MoneyInput
-                value={periodicIncreaseAmount}
-                onChange={setPeriodicIncreaseAmount}
-                placeholder="0.00"
-              />
-              <span style={{ 
-                margin: '0 8px',
-                color: theme.palette.mode === 'dark' 
-                  ? 'rgba(255, 255, 255, 0.7)' 
-                  : 'rgba(0, 0, 0, 0.6)'
-              }}>
-                or
-              </span>
+            <InputRow>
+              <Label>
+                <LabelTag 
+                  label="Annual Increase"
+                  tooltip="The percentage by which your recurring investment will increase each year"
+                />
+                :
+              </Label>
               <PercentageInput
                 value={periodicIncreasePercent}
                 onChange={setPeriodicIncreasePercent}
                 placeholder="0"
+                min={0}
+                max={100}
               />
-              <Dropdown 
-                value={periodicIncreaseFrequency}
-                onChange={(e) => setPeriodicIncreaseFrequency(Number(e.target.value))}
-              >
-                <MenuItem value={10}>Annual</MenuItem>
-                <MenuItem value={20}>Semiannual</MenuItem>
-                <MenuItem value={30}>Quarterly</MenuItem>
-                <MenuItem value={40}>Monthly</MenuItem>
-                <MenuItem value={50}>Weekly</MenuItem>
-                <MenuItem value={60}>Daily</MenuItem>
-              </Dropdown>
+              <span>% per year</span>
             </InputRow>
           )}
 
           <InputRow>
             <Label>
               <LabelTag 
-                label="Time Period"
-                tooltip="How long you plan on committing to investing and not withdrawing your funds."
+                label="Investment Period"
+                tooltip="How long you plan to invest (in years)"
               />
               :
             </Label>
             <NumberInput
-              value={timeValue}
-              onChange={setTimeValue}
+              value={years}
+              onChange={setYears}
+              min={1}
+              max={100}
             />
-            <Dropdown
-              value={timeUnit}
-              onChange={(e) => setTimeUnit(Number(e.target.value))}
-            >
-              <MenuItem value={10}>Days</MenuItem>
-              <MenuItem value={20}>Weeks</MenuItem>
-              <MenuItem value={30}>Months</MenuItem>
-              <MenuItem value={40}>Years</MenuItem>
-            </Dropdown>
+            <span>Years</span>
           </InputRow>
 
           <InputRow>
@@ -256,13 +249,13 @@ export const ReturnCalc = () => {
               value={returnRateFrequency}
               onChange={(e) => setReturnRateFrequency(Number(e.target.value))}
             >
-              <MenuItem value={10}>Annual</MenuItem>
-              <MenuItem value={20}>Semiannual</MenuItem>
-              <MenuItem value={30}>Quarterly</MenuItem>
-              <MenuItem value={40}>Monthly</MenuItem>
-              <MenuItem value={50}>Weekly</MenuItem>
-              <MenuItem value={60}>Daily</MenuItem>
-              <MenuItem value={70}>Continuously</MenuItem>
+              <MenuItem value={CompoundingFrequency.ANNUALLY}>Annual</MenuItem>
+              <MenuItem value={CompoundingFrequency.SEMI_ANNUALLY}>Semiannual</MenuItem>
+              <MenuItem value={CompoundingFrequency.QUARTERLY}>Quarterly</MenuItem>
+              <MenuItem value={CompoundingFrequency.MONTHLY}>Monthly</MenuItem>
+              <MenuItem value={CompoundingFrequency.WEEKLY}>Weekly</MenuItem>
+              <MenuItem value={CompoundingFrequency.DAILY}>Daily</MenuItem>
+              <MenuItem value={CompoundingFrequency.CONTINUOUS}>Continuous</MenuItem>
             </Dropdown>
           </InputRow>
         </InputGroup>
@@ -313,8 +306,8 @@ export const ReturnCalc = () => {
         <Inflation 
           finalAmount={result.finalAmount}
           totalInvested={result.totalInvested}
-          timeValue={parseFloat(timeValue) || 0}
-          timeUnit={timeUnit}
+          timeValue={parseFloat(years) || 0}
+          timeUnit={1}
         />
       </ChartWrapper>
     </ContentWrapper>

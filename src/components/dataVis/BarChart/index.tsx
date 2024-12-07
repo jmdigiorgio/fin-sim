@@ -1,23 +1,29 @@
-import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { ChartContainer, TitleRow } from '@/components/dataVis/BarChart/styles';
-
-interface DataPoint {
-  period: string;
-  investment: number;
-  interest: number;
-}
+import { 
+  BarChart as RechartsBarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  ResponsiveContainer 
+} from 'recharts';
+import { ChartContainer } from './styles';
+import { ChartDataPoint } from '@/math/charts/types';
 
 interface BarChartProps {
-  data: DataPoint[];
+  data: ChartDataPoint[];
+  title?: string;
 }
 
-export const BarChart = ({ data }: BarChartProps) => {
+export const BarChart = ({ 
+  data, 
+  title = 'Investment Growth Over Time' 
+}: BarChartProps) => {
   return (
     <ChartContainer>
-      <TitleRow>
-        <h2>Investment Growth Over Time</h2>
-      </TitleRow>
-      <ResponsiveContainer width="100%" height="100%">
+      <h2>{title}</h2>
+      <ResponsiveContainer width="100%" height={400}>
         <RechartsBarChart
           data={data}
           margin={{
@@ -34,8 +40,8 @@ export const BarChart = ({ data }: BarChartProps) => {
             formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
           />
           <Legend />
-          <Bar dataKey="investment" name="Periodic Investment" fill="#8884d8" />
-          <Bar dataKey="interest" name="Interest Earned" fill="#82ca9d" />
+          <Bar dataKey="investment" name="Investment" fill="#8884d8" />
+          <Bar dataKey="interest" name="Interest" fill="#82ca9d" />
         </RechartsBarChart>
       </ResponsiveContainer>
     </ChartContainer>

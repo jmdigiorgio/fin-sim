@@ -1,119 +1,41 @@
-/*
-This is a reusable component that wraps other components and provides a consistent styling, layout, and functionality.
-*/
+/**
+ * Box Component
+ * 
+ * This component serves as a basic container element throughout the application.
+ * It provides a consistent visual style for grouping related content together.
+ * 
+ * The Box automatically sizes itself to fit its contents and includes:
+ * - Subtle green background that changes with theme
+ * - Rounded corners
+ * - Light border
+ * - Standard padding
+ * 
+ * Use this component when you need to visually group related elements together
+ * or create a distinct section in the UI.
+ */
 
-'use client';
+'use client'; // This tells Next.js this is a client-side component, meaning it runs in the browser
 
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { IconButton } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { StyledBox, BoxHeader, BoxDragHandle, BoxContent, BoxResizeHandles } from './styles';
+// Import the styled component we created in styles.tsx
+import { StyledBox } from './styles';
 
+// Define what props (properties) our Box component can accept
+// The ? means children is optional
 interface BoxProps {
-  children?: React.ReactNode;
-  defaultWidth?: number;
-  defaultHeight?: number;
-  minWidth?: number;
-  maxWidth?: number;
-  minHeight?: number;
-  maxHeight?: number;
+  children?: React.ReactNode; // ReactNode means it can contain any valid React content (text, other components, etc.)
 }
 
-export const Box = ({ 
-  children, 
-  defaultWidth = 600,
-  defaultHeight = 400,
-  minWidth = 400,
-  maxWidth = 1200,
-  minHeight = 200,
-  maxHeight = 800
-}: BoxProps) => {
-  const [width, setWidth] = useState(defaultWidth);
-  const [height, setHeight] = useState(defaultHeight);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isDragging, setIsDragging] = useState<'width' | 'height' | null>(null);
-  const dragStart = useRef({ x: 0, y: 0 });
-  const dragStartDimensions = useRef({ width: 0, height: 0 });
-
-  const handleDragStart = (direction: 'width' | 'height') => (e: React.MouseEvent) => {
-    setIsDragging(direction);
-    dragStart.current = { x: e.clientX, y: e.clientY };
-    dragStartDimensions.current = { width, height };
-    e.preventDefault();
-  };
-
-  const handleDrag = useCallback((e: MouseEvent) => {
-    if (!isDragging) return;
-
-    if (isDragging === 'width') {
-      const deltaX = e.clientX - dragStart.current.x;
-      const newWidth = Math.min(Math.max(
-        dragStartDimensions.current.width + deltaX, 
-        minWidth
-      ), maxWidth);
-      setWidth(newWidth);
-    } else {
-      const deltaY = e.clientY - dragStart.current.y;
-      const newHeight = Math.min(Math.max(
-        dragStartDimensions.current.height + deltaY, 
-        minHeight
-      ), maxHeight);
-      setHeight(newHeight);
-    }
-  }, [isDragging, minWidth, maxWidth, minHeight, maxHeight]);
-
-  const handleDragEnd = useCallback(() => {
-    setIsDragging(null);
-  }, []);
-
-  useEffect(() => {
-    if (isDragging) {
-      window.addEventListener('mousemove', handleDrag);
-      window.addEventListener('mouseup', handleDragEnd);
-      
-      return () => {
-        window.removeEventListener('mousemove', handleDrag);
-        window.removeEventListener('mouseup', handleDragEnd);
-      };
-    }
-  }, [isDragging, handleDrag, handleDragEnd]);
-
+// Define our Box component
+// We use ({ children }) to destructure the children prop from the props object
+// This is the same as writing (props) and then using props.children
+export const Box = ({ children }: BoxProps) => {
+  // Return our styled box with any children nested inside it
   return (
-    <StyledBox width={width} height={isCollapsed ? 'auto' : height}>
-      <BoxHeader>
-        <IconButton 
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          size="small"
-          sx={{ 
-            transform: isCollapsed ? 'rotate(-90deg)' : 'none',
-            transition: 'transform 0.2s ease'
-          }}
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-        <BoxDragHandle 
-          onMouseDown={handleDragStart('width')}
-          isDragging={isDragging === 'width'}
-        >
-          <DragIndicatorIcon />
-        </BoxDragHandle>
-      </BoxHeader>
-      <BoxContent isCollapsed={isCollapsed}>
-        {children}
-      </BoxContent>
-      {!isCollapsed && (
-        <BoxResizeHandles>
-          <div 
-            className="height-handle"
-            onMouseDown={handleDragStart('height')}
-          >
-            <DragIndicatorIcon />
-          </div>
-        </BoxResizeHandles>
-      )}
+    <StyledBox>
+      {children}
     </StyledBox>
   );
 };
 
+// Make this component available for import in other files
 export default Box;

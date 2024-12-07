@@ -3,6 +3,7 @@
 import { Box } from '@/components/layout/Box';
 import { SidePanel } from '@/components/layout/SidePanel';
 import { useSidePanel } from '@/components/layout/SidePanelContext';
+import { ComponentTitle } from '@/components/shared/ComponentTitle';
 import { styled } from '@mui/material/styles';
 
 const PageContainer = styled('div')({
@@ -32,7 +33,7 @@ export default function ReturnOnInvestmentPage() {
       <SidePanel />
       <MainContent sidebarWidth={sidebarWidth}>
         <Box>
-          Return on Investment Calculator
+          <ComponentTitle>Return on Investment</ComponentTitle>
         </Box>
       </MainContent>
     </PageContainer>

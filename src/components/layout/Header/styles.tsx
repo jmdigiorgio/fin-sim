@@ -22,18 +22,3 @@ export const HeaderContainer = styled('header', {
     padding: '16px',
   }
 }));
-
-export const PageTitle = styled('h1')(({ theme }) => ({
-  margin: 0,
-  fontSize: '20px',
-  fontWeight: 500,
-  fontFamily: 'var(--font-geist-sans)',
-  position: 'absolute',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  color: theme.palette.mode === 'dark' 
-    ? 'rgba(255, 255, 255, 0.7)'
-    : 'rgba(0, 0, 0, 0.7)',
-  display: 'flex',
-  alignItems: 'center',
-}));

@@ -12,6 +12,7 @@ import { MetadataTag } from '@/components/shared/MetadataTag';
 import { LabelTag } from '@/components/shared/LabelTag';
 import { BarChart } from '@/components/dataVis/BarChart';
 import { useTheme } from '@mui/material/styles';
+import { Inflation } from '@/components/calculators/Inflation';
 
 const DEFAULT_VALUES = {
   initialInvestment: '',
@@ -309,6 +310,12 @@ export const ReturnCalc = () => {
       </Container>
       <ChartWrapper>
         <BarChart data={chartData} />
+        <Inflation 
+          finalAmount={result.finalAmount}
+          totalInvested={result.totalInvested}
+          timeValue={parseFloat(timeValue) || 0}
+          timeUnit={timeUnit}
+        />
       </ChartWrapper>
     </ContentWrapper>
   );

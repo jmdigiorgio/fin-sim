@@ -1,18 +1,5 @@
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { styled } from '@mui/material/styles';
-
-const ChartContainer = styled('div')(({ theme }) => ({
-  width: '100%',
-  height: '400px',
-  padding: '20px',
-  backgroundColor: theme.palette.mode === 'dark'
-    ? 'transparent'
-    : 'rgba(0, 0, 0, 0.03)',
-  border: `1px solid ${theme.palette.mode === 'dark' 
-    ? 'rgba(255, 255, 255, 0.1)'
-    : 'rgba(0, 0, 0, 0.1)'}`,
-  borderRadius: '12px',
-}));
+import { ChartContainer, TitleRow } from '@/components/dataVis/BarChart/styles';
 
 interface DataPoint {
   period: string;
@@ -27,6 +14,9 @@ interface BarChartProps {
 export const BarChart = ({ data }: BarChartProps) => {
   return (
     <ChartContainer>
+      <TitleRow>
+        <h2>Investment Growth Over Time</h2>
+      </TitleRow>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsBarChart
           data={data}

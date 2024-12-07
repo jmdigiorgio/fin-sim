@@ -1,12 +1,9 @@
 'use client';
 
 import { ReturnCalc } from '@/components/calculators/ReturnCalc';
-import { Header } from '@/components/layout/Header';
 import { SidePanel } from '@/components/layout/SidePanel';
 import { useSidePanel } from '@/components/layout/SidePanelContext';
 import { styled } from '@mui/material/styles';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import { SvgIconComponent } from '@mui/icons-material';
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -17,7 +14,6 @@ const MainContent = styled('main', {
   shouldForwardProp: (prop) => prop !== 'sidebarWidth',
 })<{ sidebarWidth: number }>(({ sidebarWidth }) => ({
   marginLeft: `${sidebarWidth}px`,
-  marginTop: '64px',
   flex: 1,
   padding: '32px',
   transition: 'margin-left 0.3s ease',
@@ -34,11 +30,6 @@ export default function InvestmentCalculator() {
   return (
     <PageContainer>
       <SidePanel />
-      <Header 
-        pageTitle="Return on Investment" 
-        icon={TrendingUpIcon as SvgIconComponent}
-        iconColor="#4caf50"
-      />
       <MainContent sidebarWidth={sidebarWidth}>
         <ReturnCalc />
       </MainContent>

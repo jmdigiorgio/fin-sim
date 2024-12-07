@@ -1,15 +1,17 @@
 'use client';
 
 import { List, Divider } from '@mui/material';
-import { PanelContainer, PanelContent } from './styles';
+import { PanelContainer, PanelContent, BottomContainer, CollapseButtonContainer } from './styles';
 import { useSidePanel } from '@/components/layout/SidePanelContext';
 import { FunctionButton } from '@/components/shared/FunctionButton';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
+import { CollapseButton } from '@/components/shared/CollapseButton';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import CottageIcon from '@mui/icons-material/Cottage';
 import { useTheme } from '@mui/material/styles';
 
 export const SidePanel = () => {
-  const { isOpen } = useSidePanel();
+  const { isOpen, togglePanel } = useSidePanel();
   const theme = useTheme();
 
   const nestFundButtonStyle = {
@@ -23,6 +25,9 @@ export const SidePanel = () => {
 
   return (
     <PanelContainer isOpen={isOpen}>
+      <CollapseButtonContainer>
+        <CollapseButton onClick={togglePanel} collapsed={!isOpen} />
+      </CollapseButtonContainer>
       <PanelContent>
         <List sx={{ 
           width: '100%', 
@@ -48,6 +53,9 @@ export const SidePanel = () => {
           />
         </List>
       </PanelContent>
+      <BottomContainer>
+        <ThemeToggle />
+      </BottomContainer>
     </PanelContainer>
   );
 };

@@ -1,6 +1,5 @@
 'use client';
 
-import { Header } from '@/components/layout/Header';
 import { SidePanel } from '@/components/layout/SidePanel';
 import { FeatureCard } from '@/components/shared/FeatureCard';
 import { useSidePanel } from '@/components/layout/SidePanelContext';
@@ -12,7 +11,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import SavingsIcon from '@mui/icons-material/Savings';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 
-// Reuse the same layout components from investment calculator
 const PageContainer = styled('div')({
   display: 'flex',
   minHeight: '100vh',
@@ -22,7 +20,6 @@ const MainContent = styled('main', {
   shouldForwardProp: (prop) => prop !== 'sidebarWidth',
 })<{ sidebarWidth: number }>(({ sidebarWidth }) => ({
   marginLeft: `${sidebarWidth}px`,
-  marginTop: '64px', // Header height
   flex: 1,
   padding: '32px',
   transition: 'margin-left 0.3s ease',
@@ -91,7 +88,6 @@ export default function Calculators() {
   return (
     <PageContainer>
       <SidePanel />
-      <Header pageTitle="Calculators" />
       <MainContent sidebarWidth={sidebarWidth}>
         <CardsContainer>
           {calculators.map((calc) => (

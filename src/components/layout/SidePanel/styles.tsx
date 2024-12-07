@@ -14,7 +14,6 @@ export const PanelContainer = styled(Box, {
     : '#f5f5f5',
   transition: 'width 0.3s ease',
   zIndex: 1000,
-  overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -32,7 +31,19 @@ export const PanelContent = styled(Box)({
   transition: 'transform 0.3s ease',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
+  alignItems: 'center',
+  overflow: 'hidden',
+});
+
+export const BottomContainer = styled(Box)({
+  position: 'absolute',
+  bottom: '20px',
+  left: 0,
+  right: 0,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '10px'
 });
 
 export const CollapseButton = styled(Box)({
@@ -74,4 +85,11 @@ export const LogoButton = styled(Box)({
       transform: 'scale(1.05)',
     }
   }
+});
+
+export const CollapseButtonContainer = styled(Box)({
+  position: 'absolute',
+  top: '20px',
+  right: '-20px',
+  zIndex: 1200,
 }); 

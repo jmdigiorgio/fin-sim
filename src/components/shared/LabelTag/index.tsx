@@ -8,7 +8,17 @@ interface LabelTagProps {
 
 export const LabelTag = ({ label, tooltip }: LabelTagProps) => {
   return (
-    <Tooltip title={tooltip}>
+    <Tooltip 
+      title={tooltip}
+      componentsProps={{
+        tooltip: {
+          sx: {
+            maxWidth: '300px',
+            whiteSpace: 'pre-line'
+          }
+        }
+      }}
+    >
       <LabelContainer>
         {label}
       </LabelContainer>

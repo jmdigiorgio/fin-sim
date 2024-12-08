@@ -28,8 +28,8 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   // Background color based on dark/light mode
   // Using rgba for slight transparency
   backgroundColor: theme.palette.mode === 'dark'
-    ? 'rgba(51, 255, 184, 0.03)'  // Very light green in dark mode
-    : 'rgba(30, 133, 97, 0.08)',  // Slightly darker green in light mode
+    ? 'rgba(20, 20, 20, 1.0)'  // Dark grey in dark mode
+    : 'rgba(245, 245, 245, 1.0)',  // Light grey in light mode
   
   // Border styling
   border: `2px solid ${theme.palette.mode === 'dark' 
@@ -44,5 +44,10 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   
   // Sizing behavior
   height: 'fit-content',          // Height grows to fit content
-  alignSelf: 'flex-start'         // Prevents unwanted stretching in flex containers
+  alignSelf: 'flex-start',         // Prevents unwanted stretching in flex containers
+
+  // More pronounced shadow
+  boxShadow: theme.palette.mode === 'dark'
+    ? '0 8px 32px rgba(0, 0, 0, 0.65)'
+    : '0 8px 32px rgba(0, 0, 0, 0.25)',
 }));

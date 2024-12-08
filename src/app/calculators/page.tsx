@@ -48,7 +48,7 @@ const calculators = [
     title: 'Investment Returns',
     description: 'Calculate potential returns on investments with compound interest and recurring contributions.',
     icon: TrendingUpIcon,
-    href: '/calculators/investment',
+    href: '/calculators/return-on-investment',
     color: '#4caf50'
   },
   {

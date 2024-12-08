@@ -9,8 +9,8 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
   fontWeight: 500,
   textAlign: 'center',
   backgroundColor: theme.palette.mode === 'dark' 
-    ? 'rgba(255, 255, 255, 0.05)'
-    : 'rgba(0, 0, 0, 0.03)',
+    ? 'rgba(20, 20, 20, 1.0)'
+    : 'rgba(245, 245, 245, 1.0)',
   border: `1px solid ${theme.palette.mode === 'dark' 
     ? 'rgba(255, 255, 255, 0.1)'
     : 'rgba(0, 0, 0, 0.1)'}`,

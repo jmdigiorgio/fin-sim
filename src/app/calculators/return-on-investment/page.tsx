@@ -25,6 +25,12 @@ import { styled } from '@mui/material/styles';
 import { Divider } from '@mui/material';
 import { ResultBox } from '@/components/shared/ResultBox';
 import { Box } from '@/components/layout/Box';
+import { MoneyInput } from '@/components/shared/MoneyInput';
+import { PercentageInput } from '@/components/shared/PercentageInput';
+import { NumberInput } from '@/components/shared/NumberInput';
+import { Dropdown } from '@/components/shared/Dropdown';
+import { MenuItem } from '@mui/material';
+import { ClearForm } from '@/components/shared/ClearForm';
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -45,7 +51,11 @@ const MainContent = styled('main', {
 }));
 
 const TitleSection = styled('div')({
-  marginBottom: '5px'
+  marginBottom: '5px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: '16px'
 });
 
 const MetadataSection = styled('div')({
@@ -54,7 +64,11 @@ const MetadataSection = styled('div')({
 
 const InputSection = styled('div')({
   marginBottom: '12px',
-  marginTop: '12px'
+  marginTop: '12px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: '16px'
 });
 
 const ResultSection = styled('div')({
@@ -62,25 +76,24 @@ const ResultSection = styled('div')({
   marginTop: '12px',
   display: 'flex',
   alignItems: 'center',
-  gap: '16px',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  gap: '16px'
 });
-
-const ResultsContainer = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' 
-    ? theme.palette.background.paper
-    : theme.palette.grey[200],        // Changed from grey[100] to grey[200] for more contrast
-  padding: '12px',
-  borderRadius: '12px',
-  marginTop: '24px'
-}));
 
 const InputsContainer = styled('div')({
   padding: '24px',
   borderRadius: '12px',
   marginTop: '0px'
 });
+
+const ResultsContainer = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' 
+    ? theme.palette.background.paper
+    : theme.palette.grey[200],
+  padding: '12px',
+  borderRadius: '12px',
+  marginTop: '24px'
+}));
 
 export default function ReturnOnInvestmentPage() {
   const { isOpen } = useSidePanel();
@@ -101,6 +114,7 @@ export default function ReturnOnInvestmentPage() {
             >
               Return on Investment Calculator
             </BoxTitle>
+            <ClearForm onClear={() => {}} />
           </TitleSection>
 
           <MetadataSection>
@@ -128,6 +142,7 @@ export default function ReturnOnInvestmentPage() {
                 label="Initial Investment:"
                 tooltip="A one-time investment made at the beginning of the investment period."
               />
+              <MoneyInput value="" onChange={() => {}} />
             </InputSection>
             
             <InputSection>
@@ -135,6 +150,7 @@ export default function ReturnOnInvestmentPage() {
                 label="Recurring Contribution:"
                 tooltip="A regular investment made at a fixed interval."
               />
+              <MoneyInput value="" onChange={() => {}} />
             </InputSection>
 
             <InputSection>
@@ -142,6 +158,14 @@ export default function ReturnOnInvestmentPage() {
                 label="Recurring Interval:"
                 tooltip="The frequency at which contributions are made."
               />
+              <Dropdown value="" onChange={() => {}}>
+                <MenuItem value="DAILY">Daily</MenuItem>
+                <MenuItem value="WEEKLY">Weekly</MenuItem>
+                <MenuItem value="MONTHLY">Monthly</MenuItem>
+                <MenuItem value="QUARTERLY">Quarterly</MenuItem>
+                <MenuItem value="SEMI_ANNUALLY">Semi-annually</MenuItem>
+                <MenuItem value="ANNUALLY">Annually</MenuItem>
+              </Dropdown>
             </InputSection>
 
             <InputSection>
@@ -149,6 +173,7 @@ export default function ReturnOnInvestmentPage() {
                 label="Annual Increase:"
                 tooltip="The amount you increase your investment contributions each year."
               />
+              <MoneyInput value="" onChange={() => {}} />
             </InputSection>
 
             <InputSection>
@@ -156,6 +181,7 @@ export default function ReturnOnInvestmentPage() {
                 label="Return Rate:"
                 tooltip="The annual rate of return for the investment."
               />
+              <PercentageInput value="" onChange={() => {}} />
             </InputSection>
 
             <InputSection>
@@ -163,6 +189,7 @@ export default function ReturnOnInvestmentPage() {
                 label="Investment Duration:"
                 tooltip="The total duration of the investment period in years."
               />
+              <NumberInput value="" onChange={() => {}} />
             </InputSection>
 
             <InputSection>
@@ -170,6 +197,7 @@ export default function ReturnOnInvestmentPage() {
                 label="Inflation Rate:"
                 tooltip="The annual rate of inflation."
               />
+              <PercentageInput value="" onChange={() => {}} />
             </InputSection>
           </InputsContainer>
 

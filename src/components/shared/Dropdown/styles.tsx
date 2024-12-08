@@ -3,9 +3,11 @@ import { FormControl } from '@mui/material';
 
 export const StyledFormControl = styled(FormControl)({
   minWidth: '140px',
-  borderRadius: '8px',
   '& .MuiOutlinedInput-root': {
-    borderRadius: '8px',
+    height: '40px'
+  },
+  '& .MuiSelect-select': {
+    padding: '8px 14px',
     fontFamily: 'var(--font-geist-sans)',
     fontSize: '16px'
   }

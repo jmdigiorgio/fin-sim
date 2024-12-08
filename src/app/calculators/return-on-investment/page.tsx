@@ -31,6 +31,9 @@ import { NumberInput } from '@/components/shared/NumberInput';
 import { Dropdown } from '@/components/shared/Dropdown';
 import { MenuItem } from '@mui/material';
 import { ClearForm } from '@/components/shared/ClearForm';
+import { useROICollector, roiInputs } from '@/agents/collectors/roiCollector';
+import { useROIPublisher } from '@/agents/publishers/roiPublisher';
+import { useState } from 'react';
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -99,6 +102,32 @@ export default function ReturnOnInvestmentPage() {
   const { isOpen } = useSidePanel();
   const sidebarWidth = isOpen ? 240 : 64;
 
+  const {
+    values,
+    updateInitialInvestment,
+    updateRecurringAmount,
+    updateRecurringInterval,
+    updateAnnualIncreasePercent,
+    updateReturnRate,
+    updateDuration,
+    updateInflationRate,
+    resetInputs
+  } = useROICollector();
+
+  const [results, setResults] = useState({
+    totalInvested: '$0',
+    totalReturn: '$0',
+    totalValue: '$0',
+    inflationAdjusted: '$0',
+    savingsAlternative: '$0'
+  });
+
+  // Use the publisher to update results
+  useROIPublisher({
+    inputs: values,
+    onUpdateResults: setResults
+  });
+
   return (
     <PageContainer>
       <SidePanel />
@@ -114,7 +143,7 @@ export default function ReturnOnInvestmentPage() {
             >
               Return on Investment Calculator
             </BoxTitle>
-            <ClearForm onClear={() => {}} />
+            <ClearForm onClear={resetInputs} />
           </TitleSection>
 
           <MetadataSection>
@@ -142,7 +171,10 @@ export default function ReturnOnInvestmentPage() {
                 label="Initial Investment:"
                 tooltip="A one-time investment made at the beginning of the investment period."
               />
-              <MoneyInput value="" onChange={() => {}} />
+              <MoneyInput 
+                value={values.initialInvestment} 
+                onChange={updateInitialInvestment} 
+              />
             </InputSection>
             
             <InputSection>
@@ -150,7 +182,10 @@ export default function ReturnOnInvestmentPage() {
                 label="Recurring Contribution:"
                 tooltip="A regular investment made at a fixed interval."
               />
-              <MoneyInput value="" onChange={() => {}} />
+              <MoneyInput 
+                value={values.recurringAmount} 
+                onChange={updateRecurringAmount} 
+              />
             </InputSection>
 
             <InputSection>
@@ -158,7 +193,10 @@ export default function ReturnOnInvestmentPage() {
                 label="Recurring Interval:"
                 tooltip="The frequency at which contributions are made."
               />
-              <Dropdown value="" onChange={() => {}}>
+              <Dropdown 
+                value={values.recurringInterval} 
+                onChange={(e) => updateRecurringInterval(e.target.value as roiInputs['recurringInterval'])}
+              >
                 <MenuItem value="DAILY">Daily</MenuItem>
                 <MenuItem value="WEEKLY">Weekly</MenuItem>
                 <MenuItem value="MONTHLY">Monthly</MenuItem>
@@ -171,9 +209,12 @@ export default function ReturnOnInvestmentPage() {
             <InputSection>
               <LabelTag 
                 label="Annual Increase:"
-                tooltip="The amount you increase your investment contributions each year."
+                tooltip="The percentage you increase your investment contributions each year."
               />
-              <MoneyInput value="" onChange={() => {}} />
+              <PercentageInput 
+                value={values.annualIncreasePercent} 
+                onChange={updateAnnualIncreasePercent} 
+              />
             </InputSection>
 
             <InputSection>
@@ -181,7 +222,10 @@ export default function ReturnOnInvestmentPage() {
                 label="Return Rate:"
                 tooltip="The annual rate of return for the investment."
               />
-              <PercentageInput value="" onChange={() => {}} />
+              <PercentageInput 
+                value={values.returnRate} 
+                onChange={updateReturnRate} 
+              />
             </InputSection>
 
             <InputSection>
@@ -189,7 +233,10 @@ export default function ReturnOnInvestmentPage() {
                 label="Investment Duration:"
                 tooltip="The total duration of the investment period in years."
               />
-              <NumberInput value="" onChange={() => {}} />
+              <NumberInput 
+                value={values.duration} 
+                onChange={updateDuration} 
+              />
             </InputSection>
 
             <InputSection>
@@ -197,7 +244,10 @@ export default function ReturnOnInvestmentPage() {
                 label="Inflation Rate:"
                 tooltip="The annual rate of inflation."
               />
-              <PercentageInput value="" onChange={() => {}} />
+              <PercentageInput 
+                value={values.inflationRate} 
+                onChange={updateInflationRate} 
+              />
             </InputSection>
           </InputsContainer>
 
@@ -210,7 +260,7 @@ export default function ReturnOnInvestmentPage() {
                 tooltip="The total amount invested over the duration of the investment period."
               />
               <ResultBox type="neutral">
-                $0
+                {results.totalInvested}
               </ResultBox>
             </ResultSection>
 
@@ -219,8 +269,8 @@ export default function ReturnOnInvestmentPage() {
                 label="Total Return:"
                 tooltip="The total return on the investment over the duration of the investment period."
               />
-              <ResultBox type="neutral">
-                $0
+              <ResultBox type="gain">
+                {results.totalReturn}
               </ResultBox>
             </ResultSection>
 
@@ -229,8 +279,8 @@ export default function ReturnOnInvestmentPage() {
                 label="Total Value:"
                 tooltip="The total value of the investment after the duration of the investment period."
               />
-              <ResultBox type="neutral">
-                $0
+              <ResultBox type="gain">
+                {results.totalValue}
               </ResultBox>
             </ResultSection>
 
@@ -239,8 +289,8 @@ export default function ReturnOnInvestmentPage() {
                 label="Adjusted for Inflation:"
                 tooltip="The total value of the investment after the duration of the investment period, adjusted for inflation."
               />
-              <ResultBox type="neutral">
-                $0
+              <ResultBox type="loss">
+                {results.inflationAdjusted}
               </ResultBox>
             </ResultSection>
 
@@ -249,8 +299,8 @@ export default function ReturnOnInvestmentPage() {
                 label="Savings Alternative:"
                 tooltip="What your money would be worth if you'd saved it instead of investing."
               />
-              <ResultBox type="neutral">
-                $0
+              <ResultBox type="loss">
+                {results.savingsAlternative}
               </ResultBox>
             </ResultSection>
           </ResultsContainer>

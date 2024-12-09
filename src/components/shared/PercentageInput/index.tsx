@@ -3,13 +3,38 @@
 import { ChangeEvent } from 'react';
 import { StyledTextField } from './styles';
 
+// Define the expected props for this component
 interface PercentageInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  min?: number;
-  max?: number;
+  value: string;      // The current value of the input
+  onChange: (value: string) => void;  // Callback function when value changes
+  placeholder?: string;  // Optional placeholder text
+  min?: number;       // Optional minimum value (defaults to 0)
+  max?: number;       // Optional maximum value (defaults to 1000)
 }
+
+/**
+ * PercentageInput Component
+ * 
+ * A specialized input field for handling percentage values. This component ensures
+ * that users can only enter valid whole number percentages within a specified range.
+ * It provides a consistent UI with a percentage symbol suffix and centered text.
+ * 
+ * Features:
+ * - Validates input to ensure only whole numbers are accepted
+ * - Configurable minimum and maximum values (0-1000% by default)
+ * - Provides visual feedback with a percentage symbol suffix
+ * - Center-aligned text for better readability
+ * - Silently prevents invalid inputs without error messages
+ * 
+ * Usage:
+ * <PercentageInput
+ *   value={percent}
+ *   onChange={handlePercentChange}
+ *   placeholder="0"
+ *   min={0}
+ *   max={1000}
+ * />
+ */
 
 export const PercentageInput = ({ 
   value, 
@@ -18,6 +43,7 @@ export const PercentageInput = ({
   min = 0,
   max = 1000
 }: PercentageInputProps) => {
+  // Handler for when the input value changes
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     
@@ -27,21 +53,21 @@ export const PercentageInput = ({
         parseInt(newValue) <= max)) {
       onChange(newValue);
     }
-    // Invalid input is simply ignored, no error state needed
+    // Invalid inputs are silently ignored
   };
 
   return (
     <StyledTextField
-      size="small"
+      size="small"  // Makes the input field compact
       value={value}
       onChange={handleChange}
       placeholder={placeholder}
       InputProps={{
-        endAdornment: '%',
+        endAdornment: '%',  // Adds percentage symbol at end of input
       }}
       inputProps={{
-        'aria-label': 'percentage',
-        style: { textAlign: 'center' }
+        'aria-label': 'percentage',  // For accessibility
+        style: { textAlign: 'center' }  // Centers the text
       }}
     />
   );

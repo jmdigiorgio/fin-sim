@@ -66,37 +66,65 @@ const MetadataSection = styled('div')({
 });
 
 const InputSection = styled('div')({
-  marginBottom: '12px',
-  marginTop: '12px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: '16px'
+  gap: '16px',
+  '& > :first-of-type': {
+    flex: '1 1 60%',
+    minWidth: '200px'
+  },
+  '& > :last-child': {
+    flex: '0 0 140px'
+  }
 });
 
 const ResultSection = styled('div')({
-  marginBottom: '12px',
-  marginTop: '12px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  gap: '16px'
+  gap: '16px',
+  '& > :first-of-type': {
+    flex: '1 1 60%',
+    minWidth: '200px'
+  },
+  '& > :last-child': {
+    flex: '0 0 140px'
+  }
 });
 
 const InputsContainer = styled('div')({
   padding: '24px',
   borderRadius: '12px',
-  marginTop: '0px'
+  flex: '1',
+  minWidth: '400px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '12px'
 });
 
 const ResultsContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' 
     ? theme.palette.background.paper
     : theme.palette.grey[200],
-  padding: '12px',
+  padding: '24px',
   borderRadius: '12px',
-  marginTop: '24px'
+  flex: '1',
+  minWidth: '400px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '12px'
 }));
+
+const ContentContainer = styled('div')({
+  display: 'flex',
+  gap: '24px',
+  width: '100%',
+  alignItems: 'stretch',
+  '@media (max-width: 1024px)': {
+    flexDirection: 'column'
+  }
+});
 
 export default function ReturnOnInvestmentPage() {
   const { isOpen } = useSidePanel();
@@ -165,114 +193,113 @@ export default function ReturnOnInvestmentPage() {
 
           <Divider sx={{ my: 1 }} />
 
-          <InputsContainer>
-            <InputSection>
-              <LabelTag 
-                label="Initial Investment:"
-                tooltip="A one-time investment made at the beginning of the investment period."
-              />
-              <MoneyInput 
-                value={values.initialInvestment} 
-                onChange={updateInitialInvestment} 
-              />
-            </InputSection>
-            
-            <InputSection>
-              <LabelTag 
-                label="Recurring Contribution:"
-                tooltip="A regular investment made at a fixed interval."
-              />
-              <MoneyInput 
-                value={values.recurringAmount} 
-                onChange={updateRecurringAmount} 
-              />
-            </InputSection>
+          <ContentContainer>
+            <InputsContainer>
+              <InputSection>
+                <LabelTag 
+                  label="Initial Investment:"
+                  tooltip="A one-time investment made at the beginning of the investment period."
+                />
+                <MoneyInput 
+                  value={values.initialInvestment} 
+                  onChange={updateInitialInvestment} 
+                />
+              </InputSection>
+              
+              <InputSection>
+                <LabelTag 
+                  label="Recurring Contribution:"
+                  tooltip="A regular investment made at a fixed interval."
+                />
+                <MoneyInput 
+                  value={values.recurringAmount} 
+                  onChange={updateRecurringAmount} 
+                />
+              </InputSection>
 
-            <InputSection>
-              <LabelTag 
-                label="Recurring Interval:"
-                tooltip="The frequency at which contributions are made."
-              />
-              <Dropdown 
-                value={values.recurringInterval} 
-                onChange={(e) => updateRecurringInterval(e.target.value as roiInputs['recurringInterval'])}
-              >
-                <MenuItem value="DAILY">Daily</MenuItem>
-                <MenuItem value="WEEKLY">Weekly</MenuItem>
-                <MenuItem value="MONTHLY">Monthly</MenuItem>
-                <MenuItem value="QUARTERLY">Quarterly</MenuItem>
-                <MenuItem value="SEMI_ANNUALLY">Semi-annually</MenuItem>
-                <MenuItem value="ANNUALLY">Annually</MenuItem>
-              </Dropdown>
-            </InputSection>
+              <InputSection>
+                <LabelTag 
+                  label="Recurring Interval:"
+                  tooltip="The frequency at which contributions are made."
+                />
+                <Dropdown 
+                  value={values.recurringInterval} 
+                  onChange={(e) => updateRecurringInterval(e.target.value as roiInputs['recurringInterval'])}
+                >
+                  <MenuItem value="DAILY">Daily</MenuItem>
+                  <MenuItem value="WEEKLY">Weekly</MenuItem>
+                  <MenuItem value="MONTHLY">Monthly</MenuItem>
+                  <MenuItem value="QUARTERLY">Quarterly</MenuItem>
+                  <MenuItem value="SEMI_ANNUALLY">Semi-annually</MenuItem>
+                  <MenuItem value="ANNUALLY">Annually</MenuItem>
+                </Dropdown>
+              </InputSection>
 
-            <InputSection>
-              <LabelTag 
-                label="Annual Increase:"
-                tooltip="The percentage you increase your investment contributions each year."
-              />
-              <PercentageInput 
-                value={values.annualIncreasePercent} 
-                onChange={updateAnnualIncreasePercent} 
-              />
-            </InputSection>
+              <InputSection>
+                <LabelTag 
+                  label="Annual Increase:"
+                  tooltip="The percentage you increase your investment contributions each year."
+                />
+                <PercentageInput 
+                  value={values.annualIncreasePercent} 
+                  onChange={updateAnnualIncreasePercent} 
+                />
+              </InputSection>
 
-            <InputSection>
-              <LabelTag 
-                label="Return Rate:"
-                tooltip="The annual rate of return for the investment."
-              />
-              <PercentageInput 
-                value={values.returnRate} 
-                onChange={updateReturnRate} 
-              />
-            </InputSection>
+              <InputSection>
+                <LabelTag 
+                  label="Return Rate:"
+                  tooltip="The annual rate of return for the investment."
+                />
+                <PercentageInput 
+                  value={values.returnRate} 
+                  onChange={updateReturnRate} 
+                />
+              </InputSection>
 
-            <InputSection>
-              <LabelTag 
-                label="Investment Duration:"
-                tooltip="The total duration of the investment period in years."
-              />
-              <NumberInput 
-                value={values.duration} 
-                onChange={updateDuration} 
-              />
-            </InputSection>
+              <InputSection>
+                <LabelTag 
+                  label="Investment Duration:"
+                  tooltip="The total duration of the investment period in years."
+                />
+                <NumberInput 
+                  value={values.duration} 
+                  onChange={updateDuration} 
+                />
+              </InputSection>
 
-            <InputSection>
-              <LabelTag 
-                label="Inflation Rate:"
-                tooltip="The annual rate of inflation."
-              />
-              <PercentageInput 
-                value={values.inflationRate} 
-                onChange={updateInflationRate} 
-              />
-            </InputSection>
-          </InputsContainer>
+              <InputSection>
+                <LabelTag 
+                  label="Inflation Rate:"
+                  tooltip="The annual rate of inflation."
+                />
+                <PercentageInput 
+                  value={values.inflationRate} 
+                  onChange={updateInflationRate} 
+                />
+              </InputSection>
+            </InputsContainer>
 
-          <Divider sx={{ my: 1 }} />
+            <ResultsContainer>
+              <ResultSection>
+                <LabelTag 
+                  label="Total Invested:"
+                  tooltip="The total amount invested over the duration of the investment period."
+                />
+                <ResultBox type="neutral">
+                  {results.totalInvested}
+                </ResultBox>
+              </ResultSection>
 
-          <ResultsContainer>
-            <ResultSection>
-              <LabelTag 
-                label="Total Invested:"
-                tooltip="The total amount invested over the duration of the investment period."
-              />
-              <ResultBox type="neutral">
-                {results.totalInvested}
-              </ResultBox>
-            </ResultSection>
-
-            <ResultSection>
-              <LabelTag 
-                label="Total Return:"
-                tooltip="The total return on the investment over the duration of the investment period."
-              />
-              <ResultBox type="gain">
-                {results.totalReturn}
-              </ResultBox>
-            </ResultSection>
+              <ResultSection>
+                <LabelTag 
+                  label="Total Return:"
+                  tooltip="The total return on the investment over the duration of the investment period."
+                />
+                <ResultBox type="gain">
+                  {results.totalReturn}
+                </ResultBox>
+              </ResultSection>
 
             <ResultSection>
               <LabelTag 
@@ -284,26 +311,27 @@ export default function ReturnOnInvestmentPage() {
               </ResultBox>
             </ResultSection>
 
-            <ResultSection>
-              <LabelTag 
-                label="Adjusted for Inflation:"
-                tooltip="The total value of the investment after the duration of the investment period, adjusted for inflation."
-              />
-              <ResultBox type="loss">
-                {results.inflationAdjusted}
-              </ResultBox>
-            </ResultSection>
+              <ResultSection>
+                <LabelTag 
+                  label="Adjusted for Inflation:"
+                  tooltip="The total value of the investment after the duration of the investment period, adjusted for inflation."
+                />
+                <ResultBox type="loss">
+                  {results.inflationAdjusted}
+                </ResultBox>
+              </ResultSection>
 
-            <ResultSection>
-              <LabelTag 
-                label="Savings Alternative:"
-                tooltip="What your money would be worth if you'd saved it instead of investing."
-              />
-              <ResultBox type="loss">
-                {results.savingsAlternative}
-              </ResultBox>
-            </ResultSection>
-          </ResultsContainer>
+              <ResultSection>
+                <LabelTag 
+                  label="Savings Alternative:"
+                  tooltip="What your money would be worth if you'd saved it instead of investing."
+                />
+                <ResultBox type="loss">
+                  {results.savingsAlternative}
+                </ResultBox>
+              </ResultSection>
+            </ResultsContainer>
+          </ContentContainer>
         </Box>
       </MainContent>
     </PageContainer>

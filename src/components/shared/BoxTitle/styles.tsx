@@ -58,6 +58,6 @@ export const StyledTitle = styled('h2')(({ theme }) => ({
   fontWeight: 600,
   fontFamily: 'var(--font-geist-sans)',
   color: theme.palette.mode === 'dark' 
-    ? 'rgba(255, 255, 255, 0.9)'
-    : 'rgba(0, 0, 0, 0.9)',
+    ? '#33ffb8'
+    : '#1e8561',
 }));

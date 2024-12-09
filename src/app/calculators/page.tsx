@@ -10,6 +10,8 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import HomeIcon from '@mui/icons-material/Home';
 import SavingsIcon from '@mui/icons-material/Savings';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
+import { useEffect, useState } from 'react';
+import { Loading } from '@/components/shared/Loading';
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -81,9 +83,21 @@ const calculators = [
   },
 ];
 
-export default function Calculators() {
+export default function CalculatorsPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const { isOpen } = useSidePanel();
   const sidebarWidth = isOpen ? 240 : 64;
+
+  useEffect(() => {
+    // Force a loading state for testing
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  if (isLoading) {
+    return <Loading fullscreen />;
+  }
 
   return (
     <PageContainer>

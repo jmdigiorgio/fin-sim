@@ -33,7 +33,8 @@ import { MenuItem } from '@mui/material';
 import { ClearForm } from '@/components/shared/ClearForm';
 import { useROICollector, roiInputs } from '@/agents/collectors/roiCollector';
 import { useROIPublisher } from '@/agents/publishers/roiPublisher';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Loading } from '@/components/shared/Loading';
 
 const PageContainer = styled('div')({
   display: 'flex',
@@ -48,9 +49,8 @@ const MainContent = styled('main', {
   padding: '32px',
   transition: 'margin-left 0.3s ease',
   display: 'flex',
-  justifyContent: 'center',
-  maxWidth: `calc(1600px - ${sidebarWidth}px)`,
-  width: '100%'
+  flexDirection: 'column',
+  alignItems: 'center',
 }));
 
 const TitleSection = styled('div')({
@@ -127,6 +127,7 @@ const ContentContainer = styled('div')({
 });
 
 export default function ReturnOnInvestmentPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const { isOpen } = useSidePanel();
   const sidebarWidth = isOpen ? 240 : 64;
 
@@ -155,6 +156,18 @@ export default function ReturnOnInvestmentPage() {
     inputs: values,
     onUpdateResults: setResults
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, []);
+
+  if (isLoading) {
+    return <Loading fullscreen />;
+  }
 
   return (
     <PageContainer>

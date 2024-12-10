@@ -22,8 +22,11 @@ import { Box } from '@mui/material';
 // The theme parameter gives us access to our app's theme (colors, dark/light mode, etc.)
 export const StyledBox = styled(Box)(({ theme }) => ({
   // Layout properties
-  display: 'inline-flex',     // Makes the box inline and enables flex layout
-  flexDirection: 'column',    // Stack children vertically
+  display: 'flex',
+  flexDirection: 'column',
+  width: 'fit-content',
+  minWidth: '300px',
+  maxWidth: '100%',
   
   // Background color based on dark/light mode
   // Using rgba for slight transparency
@@ -44,7 +47,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   
   // Sizing behavior
   height: 'fit-content',          // Height grows to fit content
-  alignSelf: 'flex-start',         // Prevents unwanted stretching in flex containers
+  alignSelf: 'center',         // Changed from stretch to center
 
   // More pronounced shadow
   boxShadow: theme.palette.mode === 'dark'

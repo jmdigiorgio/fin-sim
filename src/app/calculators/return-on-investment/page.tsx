@@ -17,7 +17,6 @@
 'use client';
 
 import { SidePanel } from '@/components/layout/SidePanel';
-import { useSidePanel } from '@/components/layout/SidePanelContext';
 import { BoxTitle } from '@/components/shared/BoxTitle';
 import { MetadataTag } from '@/components/shared/MetadataTag';
 import { LabelTag } from '@/components/shared/LabelTag';
@@ -33,25 +32,22 @@ import { MenuItem } from '@mui/material';
 import { ClearForm } from '@/components/shared/ClearForm';
 import { useROICollector, roiInputs } from '@/agents/collectors/roiCollector';
 import { useROIPublisher } from '@/agents/publishers/roiPublisher';
-import { useState, useEffect } from 'react';
-import { Loading } from '@/components/shared/Loading';
+import { useState } from 'react';
 
 const PageContainer = styled('div')({
   display: 'flex',
   minHeight: '100vh',
 });
 
-const MainContent = styled('main', {
-  shouldForwardProp: (prop) => prop !== 'sidebarWidth',
-})<{ sidebarWidth: number }>(({ sidebarWidth }) => ({
-  marginLeft: `${sidebarWidth}px`,
+const MainContent = styled('main')({
+  marginLeft: '64px',
+  marginTop: '64px',
   flex: 1,
   padding: '32px',
-  transition: 'margin-left 0.3s ease',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-}));
+});
 
 const TitleSection = styled('div')({
   marginBottom: '5px',
@@ -127,10 +123,6 @@ const ContentContainer = styled('div')({
 });
 
 export default function ReturnOnInvestmentPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const { isOpen } = useSidePanel();
-  const sidebarWidth = isOpen ? 240 : 64;
-
   const {
     values,
     updateInitialInvestment,
@@ -157,22 +149,10 @@ export default function ReturnOnInvestmentPage() {
     onUpdateResults: setResults
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer); // Cleanup on unmount
-  }, []);
-
-  if (isLoading) {
-    return <Loading fullscreen />;
-  }
-
   return (
     <PageContainer>
       <SidePanel />
-      <MainContent sidebarWidth={sidebarWidth}>
+      <MainContent>
         <Box>
           <TitleSection>
             <BoxTitle

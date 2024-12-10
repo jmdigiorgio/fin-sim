@@ -2,7 +2,6 @@
 
 import { SidePanel } from '@/components/layout/SidePanel';
 import { FeatureCard } from '@/components/shared/FeatureCard';
-import { useSidePanel } from '@/components/layout/SidePanelContext';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
@@ -10,25 +9,21 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import HomeIcon from '@mui/icons-material/Home';
 import SavingsIcon from '@mui/icons-material/Savings';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-import { useEffect, useState } from 'react';
-import { Loading } from '@/components/shared/Loading';
 
 const PageContainer = styled('div')({
   display: 'flex',
   minHeight: '100vh',
 });
 
-const MainContent = styled('main', {
-  shouldForwardProp: (prop) => prop !== 'sidebarWidth',
-})<{ sidebarWidth: number }>(({ sidebarWidth }) => ({
-  marginLeft: `${sidebarWidth}px`,
+const MainContent = styled('main')({
+  marginLeft: '64px',
+  marginTop: '64px',
   flex: 1,
   padding: '32px',
-  transition: 'margin-left 0.3s ease',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-}));
+});
 
 const CardsContainer = styled('div')({
   display: 'flex',
@@ -84,25 +79,10 @@ const calculators = [
 ];
 
 export default function CalculatorsPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const { isOpen } = useSidePanel();
-  const sidebarWidth = isOpen ? 240 : 64;
-
-  useEffect(() => {
-    // Force a loading state for testing
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
-
-  if (isLoading) {
-    return <Loading fullscreen />;
-  }
-
   return (
     <PageContainer>
       <SidePanel />
-      <MainContent sidebarWidth={sidebarWidth}>
+      <MainContent>
         <CardsContainer>
           {calculators.map((calc) => (
             <CardWrapper key={calc.title}>

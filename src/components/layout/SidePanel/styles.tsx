@@ -1,18 +1,15 @@
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
-export const PanelContainer = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'isOpen',
-})<{ isOpen: boolean }>(({ theme, isOpen }) => ({
+export const PanelContainer = styled(Box)(({ theme }) => ({
   position: 'fixed',
   left: 0,
   top: 0,
   bottom: 0,
-  width: isOpen ? '240px' : '64px',
+  width: '64px',
   backgroundColor: theme.palette.mode === 'dark' 
     ? '#1a1a1a'
     : '#f5f5f5',
-  transition: 'width 0.3s ease',
   zIndex: 1000,
   display: 'flex',
   flexDirection: 'column',
@@ -28,7 +25,6 @@ export const PanelContent = styled(Box)({
   height: '100%',
   padding: '20px',
   paddingTop: '0px',
-  transition: 'transform 0.3s ease',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -44,52 +40,4 @@ export const BottomContainer = styled(Box)({
   justifyContent: 'center',
   alignItems: 'center',
   padding: '10px'
-});
-
-export const CollapseButton = styled(Box)({
-  position: 'absolute',
-  top: '20px',
-  right: '12px',
-  transition: 'opacity 0.2s ease',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  opacity: 0.7,
-  '&:hover': {
-    opacity: 1,
-  },
-});
-
-export const LogoButton = styled(Box)({
-  position: 'absolute',
-  top: '20px',
-  left: '12px',
-  height: '40px',
-  width: '40px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  transition: 'opacity 0.2s ease',
-  opacity: 0.8,
-  '& .MuiIconButton-root': {
-    '&:hover': {
-      backgroundColor: 'transparent',
-    }
-  },
-  '& .logo': {
-    transition: 'transform 0.2s ease',
-  },
-  '&:hover': {
-    opacity: 1,
-    '& .logo': {
-      transform: 'scale(1.05)',
-    }
-  }
-});
-
-export const CollapseButtonContainer = styled(Box)({
-  position: 'absolute',
-  top: '20px',
-  right: '-20px',
-  zIndex: 1200,
 }); 

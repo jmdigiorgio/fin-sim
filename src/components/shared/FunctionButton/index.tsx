@@ -1,22 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip } from '@mui/material';
+import { ListItem, ListItemButton, ListItemIcon, Tooltip } from '@mui/material';
 import { SvgIconComponent } from '@mui/icons-material';
-import { useSidePanel } from '@/components/layout/SidePanelContext';
 import { SxProps, Theme } from '@mui/material/styles';
 
 interface FunctionButtonProps {
   href: string;
   icon: SvgIconComponent | React.ComponentType;
-  label: string;
   tooltip?: string;
   sx?: SxProps<Theme>;
 }
 
-export const FunctionButton = ({ href, icon: Icon, label, tooltip, sx }: FunctionButtonProps) => {
-  const { isOpen } = useSidePanel();
-
+export const FunctionButton = ({ href, icon: Icon, tooltip, sx }: FunctionButtonProps) => {
   const button = (
     <ListItem disablePadding>
       <ListItemButton
@@ -25,7 +21,7 @@ export const FunctionButton = ({ href, icon: Icon, label, tooltip, sx }: Functio
         sx={{
           minHeight: 48,
           px: 2.5,
-          justifyContent: isOpen ? 'flex-start' : 'center',
+          justifyContent: 'center',
           transition: 'all 0.2s ease',
           opacity: 0.8,
           '&:hover': {
@@ -38,8 +34,6 @@ export const FunctionButton = ({ href, icon: Icon, label, tooltip, sx }: Functio
         <ListItemIcon
           sx={{
             minWidth: 0,
-            mr: isOpen ? 3 : 'auto',
-            ml: isOpen ? 0 : 'auto',
             justifyContent: 'center',
             transition: 'all 0.2s ease',
             '& .MuiSvgIcon-root': {
@@ -47,28 +41,19 @@ export const FunctionButton = ({ href, icon: Icon, label, tooltip, sx }: Functio
               transition: 'transform 0.2s ease',
             },
             '.MuiListItemButton-root:hover &': {
-              transform: isOpen ? 'translateX(4px)' : 'scale(1.1)'
+              transform: 'scale(1.1)'
             }
           }}
         >
           <Icon />
         </ListItemIcon>
-        {isOpen && <ListItemText 
-          primary={label} 
-          sx={{
-            '& .MuiListItemText-primary': {
-              fontSize: '18px',
-              fontWeight: 500
-            }
-          }}
-        />}
       </ListItemButton>
     </ListItem>
   );
 
   if (tooltip) {
     return (
-      <Tooltip title={tooltip} placement={isOpen ? 'right' : 'right-start'}>
+      <Tooltip title={tooltip} placement="right-start">
         {button}
       </Tooltip>
     );

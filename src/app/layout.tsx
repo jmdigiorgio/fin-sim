@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ThemeRegistryProvider from "@/components/layout/ThemeRegistry";
-import { SidePanelProvider } from '@/components/layout/SidePanelContext';
 import { Suspense } from 'react';
 import { Loading } from '@/components/shared/Loading';
+import Header from '@/components/layout/Header';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,18 +25,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ThemeRegistryProvider>
-          <SidePanelProvider>
-            <Suspense fallback={<Loading fullscreen />}>
-              {children}
-            </Suspense>
-          </SidePanelProvider>
+          <Header />
+          <Suspense fallback={<Loading fullscreen />}>
+            {children}
+          </Suspense>
         </ThemeRegistryProvider>
       </body>
     </html>

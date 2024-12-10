@@ -36,7 +36,7 @@ export const SidePanel = () => {
           />
           <Divider sx={{ my: 1 }} />
           <FunctionButton 
-            href="/calculators"
+            href="/calculators/return-on-investment"
             icon={CalculateIcon}
             tooltip="Calculators"
           />

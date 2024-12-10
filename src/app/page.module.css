@@ -135,16 +135,29 @@
 
 .devNotice {
   margin: 0 -2rem;
-  padding: 0.75rem 2rem;
-  background-color: #fff3cd;
-  border-top: 1px solid #ffeeba;
-  border-bottom: 1px solid #ffeeba;
-  color: #856404;
+  padding: 1rem 2rem;
+  background: rgba(30, 133, 97, 0.05);
+  border-top: 1px solid rgba(30, 133, 97, 0.1);
+  border-bottom: 1px solid rgba(30, 133, 97, 0.1);
+  color: var(--foreground);
   width: 100vw;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+}
+
+.devNotice p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.devNotice strong {
+  color: #1e8561;
 }
 
 .valueProposition {
@@ -174,5 +187,91 @@
   margin-bottom: 16px;
   color: var(--foreground);
   opacity: 0.8;
+}
+
+.roadmapSection {
+  margin: 3rem 0;
+  padding: 2.5rem;
+  background: rgba(var(--gray-rgb), 0.03);
+  border-radius: 16px;
+}
+
+.roadmapSection h2 {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  background: linear-gradient(45deg, #1e8561, #33ffb8);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.roadmapSection h3 {
+  margin-top: 2rem;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+}
+
+.roadmapSection h4 {
+  margin: 1rem 0;
+  font-size: 1.25rem;
+}
+
+.roadmapSection ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.roadmapSection li {
+  margin: 0.75rem 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.phasesContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.phaseBlock {
+  padding: 1.5rem;
+  background: var(--background);
+  border-radius: 12px;
+  border: 1px solid var(--gray-alpha-200);
+}
+
+.phaseBlock h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1e8561;
+  margin-bottom: 0.5rem;
+}
+
+.phaseBlock h4 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+}
+
+.phaseBlock ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.phaseBlock li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--gray-alpha-200);
+  margin: 0;
+}
+
+.phaseBlock li:first-child {
+  border-top: none;
 }
 

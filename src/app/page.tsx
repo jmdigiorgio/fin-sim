@@ -40,8 +40,8 @@ export default function Home() {
           <div className={styles.benefitsGrid}>
             <div className={styles.benefitCard}>
               <SavingsIcon />
-              <h3>Smart Investing</h3>
-              <p>Make informed investment decisions with our advanced calculators</p>
+              <h3>Manage Everything</h3>
+              <p>Keep tabs on your complete financial picture in one place</p>
             </div>
             <div className={styles.benefitCard}>
               <TimelineIcon />
@@ -59,24 +59,37 @@ export default function Home() {
             <div className={styles.ctas}>
               <Link href="/calculators/return-on-investment" className={styles.primary}>
                 <AccountBalanceIcon />
-                Explore Investment Calculator
+                Explore our Investment Calculator
               </Link>
             </div>
             <p className={styles.valueProposition}>
-              Most budgeting apps just track your spending. NestFund helps you make smarter financial decisions 
-              by focusing on what matters: growing your wealth through informed investment strategies.
+              Most budgeting apps just track your spending. NestFund brings it all together. NestFund is your personal command center for tracking where you&apos;re at financially and where you&apos;re going.
             </p>
           </section>
 
-          <section className={styles.featuresSection}>
-            <h2>What You Can Do</h2>
-            <ol>
-              <li>Calculate potential returns on investments with compound interest</li>
-              <li>Plan loan payments and mortgage scenarios</li>
-              <li>Set and track savings goals</li>
-              <li>Optimize credit card payoff strategies</li>
-              <li>Make data-driven financial decisions</li>
-            </ol>
+          <section className={styles.roadmapSection}>
+            <h2>Development Roadmap</h2>
+            
+            <div className={styles.phasesContainer}>
+              <div className={styles.phaseBlock}>
+                <h3>Current Phase</h3>
+                <h4>Foundation</h4>
+                <ul>
+                  <li>🏗️ Useful and totally free calculators for everyday finance</li>
+                  <li>🏗️ Basic user interface & user experience</li>
+                </ul>
+              </div>
+
+              <div className={styles.phaseBlock}>
+                <h3>Next Phase</h3>
+                <h4>Infrastructure</h4>
+                <ul>
+                  <li>📅 Budget & expense tracking</li>
+                  <li>📅 Database hookups</li>
+                  <li>📅 User accounts</li>
+                </ul>
+              </div>
+            </div>
           </section>
         </article>
       </main>

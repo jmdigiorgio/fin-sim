@@ -319,7 +319,7 @@ export default function ReturnOnInvestmentPage() {
                   label="Savings Alternative:"
                   tooltip="What your money would be worth if you'd saved it instead of investing."
                 />
-                <ResultBox type="loss">
+                <ResultBox type="warning">
                   {results.savingsAlternative}
                 </ResultBox>
               </ResultSection>

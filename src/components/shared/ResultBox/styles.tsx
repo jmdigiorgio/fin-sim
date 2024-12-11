@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Paper } from '@mui/material';
 
 export const StyledPaper = styled(Paper)(({ theme }) => ({
+  // Base styling
   padding: '12px 20px',
   borderRadius: '8px',
   fontFamily: 'var(--font-geist-sans)',
@@ -16,11 +17,18 @@ export const StyledPaper = styled(Paper)(({ theme }) => ({
     : 'rgba(0, 0, 0, 0.1)'}`,
   transition: 'color 0.2s ease',
   
+  // Positive result styling
   '&.gain': {
     color: theme.palette.mode === 'dark' ? '#4caf50' : '#2e7d32'
   },
   
+  // Negative result styling
   '&.loss': {
     color: theme.palette.mode === 'dark' ? '#f44336' : '#c62828'
+  },
+
+  // Warning/cautionary result styling
+  '&.warning': {
+    color: theme.palette.mode === 'dark' ? '#ffc107' : '#f57c00'
   }
 }));

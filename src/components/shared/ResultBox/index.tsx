@@ -4,7 +4,7 @@ import { StyledPaper } from './styles';
 
 interface ResultBoxProps {
   children: React.ReactNode;
-  type?: 'gain' | 'loss' | 'neutral';
+  type?: 'gain' | 'loss' | 'neutral' | 'warning';
 }
 
 export const ResultBox = ({ children, type = 'neutral' }: ResultBoxProps) => {

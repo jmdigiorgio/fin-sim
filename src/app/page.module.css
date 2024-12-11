@@ -5,27 +5,25 @@
 
 .mainContent {
   flex: 1;
-  margin-left: 64px;
-  margin-top: 64px;
-  padding: 0 32px 32px 32px;
+  margin-left: 4rem;
+  margin-top: 4rem;
+  padding: 0 2rem 2rem;
   display: flex;
   justify-content: center;
 }
 
 .contentWrapper {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 75rem;
+  margin: 8rem auto 0;
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  padding-top: 64px;
-  margin-top: 64px;
 }
 
 .heroSection {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,9 +31,9 @@
 }
 
 .heroSection h1 {
-  font-size: 48px;
+  font-size: 3rem;
   font-weight: 800;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
   background: linear-gradient(45deg, #1e8561, #33ffb8);
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -43,110 +41,18 @@
 }
 
 .heroSection p {
-  font-size: 20px;
+  font-size: 1.25rem;
   line-height: 1.6;
   color: var(--foreground);
   opacity: 0.8;
-  max-width: 600px;
+  max-width: 37.5rem;
   margin: 0 auto;
 }
 
 .heroImage {
-  height: 5em;
+  height: 4em;
   width: auto;
   transform: translateY(0.8em);
-}
-
-.ctaSection {
-  margin: 48px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-}
-
-.ctas {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-}
-
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 24px;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 500;
-  gap: 8px;
-}
-
-.primary {
-  background: var(--foreground);
-  color: var(--background);
-  transition: all 0.2s ease;
-}
-
-.primary:hover {
-  background: var(--foreground);
-  opacity: 0.9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 180px;
-}
-
-.secondary:hover {
-  background: var(--button-secondary-hover);
-}
-
-.featuresSection {
-  background: rgba(var(--gray-rgb), 0.03);
-  padding: 32px;
-  border-radius: 16px;
-}
-
-.featuresSection h2 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 24px;
-  color: var(--foreground);
-  font-family: var(--font-geist-sans);
-}
-
-.featuresSection ol {
-  list-style-position: inside;
-  padding: 0;
-  margin: 0;
-  font-family: var(--font-geist-mono);
-  font-size: 16px;
-  line-height: 1.8;
-}
-
-.featuresSection li {
-  margin-bottom: 16px;
-  padding-left: 8px;
-  opacity: 0.9;
-}
-
-.featuresSection li:last-child {
-  margin-bottom: 0;
-}
-
-/* Common theme-aware background style */
-.themeBackground {
-  background: var(--foreground-rgb, rgba(51, 255, 184, 0.05));
-  border-top: 1px solid var(--foreground-rgb, rgba(51, 255, 184, 0.1));
-  border-bottom: 1px solid var(--foreground-rgb, rgba(51, 255, 184, 0.1));
 }
 
 .devNotice {
@@ -154,29 +60,15 @@
   padding: 1rem 2rem;
   width: 100vw;
   position: absolute;
-  top: 64px;
+  top: 4rem;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+  background: var(--foreground-rgb, rgba(51, 255, 184, 0.05));
+  border-top: 1px solid var(--foreground-rgb, rgba(51, 255, 184, 0.1));
+  border-bottom: 1px solid var(--foreground-rgb, rgba(51, 255, 184, 0.1));
 }
 
-.roadmapSection {
-  margin: 2rem -2rem;
-  padding: 4rem 2rem;
-  width: calc(100vw - 64px);
-  position: relative;
-  left: calc(50% + 32px);
-  transform: translateX(-50%);
-  background: rgba(30, 133, 97, 0.05);
-}
-
-/* Apply the theme background to both sections */
-.devNotice,
-.roadmapSection {
-  composes: themeBackground;
-}
-
-/* Keep the existing text color logic for dev notice */
 .devNotice p {
   display: flex;
   align-items: center;
@@ -187,134 +79,12 @@
   color: var(--foreground);
 }
 
-[data-theme='dark'] .devNotice p {
-  color: #33ffb8;
-}
-
-.devNotice strong {
-  color: #1e8561;
-}
-
-.valueProposition {
-  text-align: center;
-  margin: 48px auto 0;
-  color: var(--foreground);
-  opacity: 0.8;
-  max-width: 800px;
-  line-height: 1.6;
-}
-.benefitsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin: 1rem 0;
-}
-
-.benefitCard {
-  padding: 24px;
-  background: rgba(var(--gray-rgb), 0.03);
-  border-radius: 12px;
-  text-align: center;
-}
-
-.benefitCard svg {
-  font-size: 32px;
-  margin-bottom: 16px;
-  color: var(--foreground);
-  opacity: 0.8;
-}
-
-.roadmapSection h2 {
-  font-size: 2rem;
-  margin-bottom: 3rem;
-  text-align: center;
-  background: linear-gradient(45deg, #1e8561, #33ffb8);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.roadmapSection h3 {
-  margin-top: 2rem;
-  color: var(--text-secondary);
-  font-size: 1.5rem;
-}
-
-.roadmapSection h4 {
-  margin: 1rem 0;
-  font-size: 1.25rem;
-}
-
-.roadmapSection ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.roadmapSection li {
-  margin: 0.75rem 0;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.phasesContainer {
-  display: flex;
-  gap: 3rem;
-  flex-wrap: wrap;
-  margin-top: 3rem;
-  justify-content: center;
-  width: 100%;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.phaseBlock {
-  flex: 1;
-  min-width: 300px;
-  max-width: calc(50% - 1.5rem);
-  padding: 2.5rem;
-  border-radius: 16px;
-  border: 1px solid rgba(51, 255, 184, 0.15);
-  background: rgba(var(--gray-rgb), 0.03);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-[data-theme='dark'] .phaseBlock {
+[data-theme='dark'] .devNotice {
   background: rgba(0, 0, 0, 0.2);
 }
 
-.phaseBlock ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.phaseBlock li {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-  color: var(--foreground);
-  opacity: 0.85;
-  font-size: 1.1rem;
-  line-height: 1.5;
-}
-
-.phaseBlock:last-child {
-  text-align: left;
-}
-
-.phaseBlock:last-child ul {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-/* Phase-specific alignments */
-.phaseBlock:first-child {
-  text-align: left;
+[data-theme='dark'] .devNotice p {
+  color: #33ffb8;
 }
 
 .welcomeContainer {
@@ -323,22 +93,16 @@
   gap: 0.25rem;
 }
 
+.welcomeContainer h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--foreground);
+  font-family: var(--font-geist-sans);
+}
+
 .illustrationImage {
   width: 100%;
   height: auto;
-  max-width: 600px;
+  max-width: 37.5rem;
   margin: 1rem auto;
 }
-
-.phaseBlock h3 {
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
-  color: var(--foreground);
-  font-weight: 600;
-}
-
-[data-theme='dark'] .phaseBlock h3 {
-  color: #33ffb8;
-  opacity: 0.9;
-}
-

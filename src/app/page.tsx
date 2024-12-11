@@ -8,6 +8,7 @@ import Image from 'next/image';
 import SavingsIcon from '@mui/icons-material/Savings';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { useTheme } from '@mui/material/styles';
 
 export default function Home() {
   return (
@@ -22,7 +23,19 @@ export default function Home() {
             </p>
           </div>
           <header className={styles.heroSection}>
-            <h1>Welcome to NestFund</h1>
+            <div className={styles.welcomeContainer}>
+              <h1>Welcome to</h1>
+              <Image 
+                src={useTheme().palette.mode === 'dark' 
+                  ? '/nest-fund-logos/nest-fund-v1-dark.svg'
+                  : '/nest-fund-logos/nest-fund-v1-light.svg'}
+                alt="NestFund"
+                width={200}
+                height={200}
+                className={styles.heroImage}
+                priority
+              />
+            </div>
             <p>
               Your personal finance companion for smarter investment decisions, 
               personal budgeting, and financial planning.
@@ -32,7 +45,7 @@ export default function Home() {
               alt="Budget Planning by Barsrsind"
               width={1200}
               height={800}
-              className={styles.heroImage}
+              className={styles.illustrationImage}
               priority
             />
           </header>
@@ -75,7 +88,7 @@ export default function Home() {
                 <h3>Current Phase</h3>
                 <h4>Foundation</h4>
                 <ul>
-                  <li>🏗️ Useful and totally free calculators for everyday finance</li>
+                  <li>🏗️ Useful and totally free calculators for everyday finance (no account required)</li>
                   <li>🏗️ Basic user interface & user experience</li>
                 </ul>
               </div>

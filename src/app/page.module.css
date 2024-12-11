@@ -13,9 +13,14 @@
 }
 
 .contentWrapper {
-  max-width: 800px;
-  width: 100%;
-  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-top: 64px;
+  margin-top: 64px;
 }
 
 .heroSection {
@@ -24,6 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2rem;
 }
 
 .heroSection h1 {
@@ -46,14 +52,17 @@
 }
 
 .heroImage {
-  width: 100%;
-  max-width: 600px;
-  margin: 12px 0;
-  height: auto;
+  height: 5em;
+  width: auto;
+  transform: translateY(0.8em);
 }
 
 .ctaSection {
   margin: 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
 }
 
 .ctas {
@@ -133,20 +142,41 @@
   margin-bottom: 0;
 }
 
+/* Common theme-aware background style */
+.themeBackground {
+  background: var(--foreground-rgb, rgba(51, 255, 184, 0.05));
+  border-top: 1px solid var(--foreground-rgb, rgba(51, 255, 184, 0.1));
+  border-bottom: 1px solid var(--foreground-rgb, rgba(51, 255, 184, 0.1));
+}
+
 .devNotice {
-  margin: 0 -2rem;
+  margin: 0;
   padding: 1rem 2rem;
-  background: rgba(30, 133, 97, 0.05);
-  border-top: 1px solid rgba(30, 133, 97, 0.1);
-  border-bottom: 1px solid rgba(30, 133, 97, 0.1);
-  color: var(--foreground);
   width: 100vw;
-  position: relative;
+  position: absolute;
+  top: 64px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
 }
 
+.roadmapSection {
+  margin: 2rem -2rem;
+  padding: 4rem 2rem;
+  width: calc(100vw - 64px);
+  position: relative;
+  left: calc(50% + 32px);
+  transform: translateX(-50%);
+  background: rgba(30, 133, 97, 0.05);
+}
+
+/* Apply the theme background to both sections */
+.devNotice,
+.roadmapSection {
+  composes: themeBackground;
+}
+
+/* Keep the existing text color logic for dev notice */
 .devNotice p {
   display: flex;
   align-items: center;
@@ -154,6 +184,11 @@
   gap: 0.5rem;
   font-size: 0.95rem;
   opacity: 0.9;
+  color: var(--foreground);
+}
+
+[data-theme='dark'] .devNotice p {
+  color: #33ffb8;
 }
 
 .devNotice strong {
@@ -171,8 +206,8 @@
 .benefitsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 0px;
-  margin: 0px 0;
+  gap: 2rem;
+  margin: 1rem 0;
 }
 
 .benefitCard {
@@ -187,13 +222,6 @@
   margin-bottom: 16px;
   color: var(--foreground);
   opacity: 0.8;
-}
-
-.roadmapSection {
-  margin: 3rem 0;
-  padding: 2.5rem;
-  background: rgba(var(--gray-rgb), 0.03);
-  border-radius: 16px;
 }
 
 .roadmapSection h2 {
@@ -230,30 +258,31 @@
 }
 
 .phasesContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .phaseBlock {
-  padding: 1.5rem;
-  background: var(--background);
-  border-radius: 12px;
-  border: 1px solid var(--gray-alpha-200);
+  flex: 1;
+  min-width: 300px;
+  max-width: calc(50% - 1.5rem);
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(51, 255, 184, 0.15);
+  background: rgba(var(--gray-rgb), 0.03);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.phaseBlock h3 {
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #1e8561;
-  margin-bottom: 0.5rem;
-}
-
-.phaseBlock h4 {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  color: var(--foreground);
+[data-theme='dark'] .phaseBlock {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .phaseBlock ul {
@@ -265,13 +294,51 @@
 .phaseBlock li {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 0;
-  border-top: 1px solid var(--gray-alpha-200);
-  margin: 0;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  color: var(--foreground);
+  opacity: 0.85;
+  font-size: 1.1rem;
+  line-height: 1.5;
 }
 
-.phaseBlock li:first-child {
-  border-top: none;
+.phaseBlock:last-child {
+  text-align: left;
+}
+
+.phaseBlock:last-child ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Phase-specific alignments */
+.phaseBlock:first-child {
+  text-align: left;
+}
+
+.welcomeContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.illustrationImage {
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+  margin: 1rem auto;
+}
+
+.phaseBlock h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+[data-theme='dark'] .phaseBlock h3 {
+  color: #33ffb8;
+  opacity: 0.9;
 }
 
